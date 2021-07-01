@@ -6,14 +6,14 @@
 #    By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/28 14:19:08 by kaye              #+#    #+#              #
-#    Updated: 2021/06/29 19:21:35 by kaye             ###   ########.fr        #
+#    Updated: 2021/07/01 19:51:59 by kaye             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION
 
 CC		= clang
-CFLAGS 	= -Wall -Wextra -Werror
+CFLAGS 	= -Wall -Wextra -Werror -fsanitize=thread
 IFLAGS 	= -I./incs
 LFLAGS	= -lpthread
 
@@ -29,9 +29,7 @@ DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 NAME			:= philo
 SRC				:= philosophers.c \
 				   utils.c \
-				   mini_lib.c \
-				   mini_lib2.c \
-				   mini_lib3.c
+				   mini_lib.c
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # COLORS

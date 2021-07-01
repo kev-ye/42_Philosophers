@@ -6,30 +6,61 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:21:19 by kaye              #+#    #+#             */
-/*   Updated: 2021/06/28 19:45:23 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/01 19:51:44 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_atoi(const char *str)
 {
-	const char	*str;
+	int	signe;
+	int	res;
 
-	str = s;
-	while (*str)
+	signe = 1;
+	res = 0;
+	while (*str && ((*str >= '\t' && *str <= '\r') || (*str == ' ')))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			signe = -1;
 		++str;
-	return (str - s);
+	}
+	while (*str && ft_isdigit(*str))
+	{
+		res = res * 10 + *str - '0';
+		++str;
+	}
+	return (res * signe);
 }
 
-void	ft_putchar(char c)
+int	ft_isdigit(int c)
 {
-	write(1, &c, 1);
+	return (c >= 48 && c <= 57);
 }
 
-void	ft_putstr(char *s)
+int ft_strdigit(const char *s)
 {
-	if (!s)
-		return ;
-	write(1, s, ft_strlen(s));
+    int i;
+
+    i = 0;
+    if (!s)
+        return (0);
+    while (s[i])
+    {
+        if (!ft_isdigit(s[i++]))
+            return (0);
+    }
+    return (1);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
+
+	ptr = (void *)malloc(count * size);
+	if (ptr)
+        memset(ptr, 0, count * size);
+	return (ptr);
 }
