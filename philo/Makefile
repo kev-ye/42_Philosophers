@@ -6,7 +6,7 @@
 #    By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/28 14:19:08 by kaye              #+#    #+#              #
-#    Updated: 2021/07/01 19:51:59 by kaye             ###   ########.fr        #
+#    Updated: 2021/07/03 16:54:40 by kaye             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,10 @@ DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 # FILES
 
 NAME			:= philo
-SRC				:= philosophers.c \
+SRC				:= main.c \
+				   philosophers.c \
 				   utils.c \
+				   utils2.c \
 				   mini_lib.c
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 

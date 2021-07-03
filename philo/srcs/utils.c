@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/01 19:52:33 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/03 19:07:35 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,68 +43,12 @@ t_philo	*singleton(void)
 	return (philo);
 }
 
-void	get_value(int ac, char **av)
-{
-	int i;
-
-	i = -1;
-	singleton()->philo_nbr = ft_atoi(av[NBR_PHILO]);
-	singleton()->philo = ft_calloc(sizeof(t_philosophers), singleton()->philo_nbr);
-	if (!singleton()->philo)
-		return ;
-	while (i <= singleton()->philo_nbr)
-	{
-		singleton()->philo[i].n_philo = i + 1;
-		++i;
-	}
-	singleton()->fork = ft_calloc(sizeof(t_fork), singleton()->philo_nbr);
-	if (!singleton()->fork)
-		return ;
-	singleton()->time2die = ft_atoi(av[T2D]);
-	singleton()->time2eat = ft_atoi(av[T2E]);
-	singleton()->time2sleep = ft_atoi(av[T2S]);
-	if (av[MUST_E])
-		singleton()->must_eat = ft_atoi(av[MUST_E]);
-}
-
-void	init_value(void)
-{
-	int i;
-
-	if (singleton())
-	{
-		i = 0;
-		while (singleton()->philo && i < singleton()->philo_nbr)
-		{
-			singleton()->philo[i].n_philo = i + 1;
-			singleton()->philo[i].philo_status = TRY_TAKE_FORK;
-			++i;
-		}
-		i = 0;
-		while (singleton()->fork && i < singleton()->philo_nbr)
-		{
-			singleton()->fork[i].fork_status = FORK_IS_DROP;
-			++i;
-		}
-	}
-}
-
 void	do_sleep(long long ms)
 {
 	const long long start = get_time();
 
 	while (get_time() - start < ms)
-		usleep(500);
-}
-
-long long	get_time(void)
-{
-	struct timeval	t;
-	long long			ms;
-	
-	gettimeofday(&t, NULL);
-	ms = (t.tv_sec * 1000) + (t.tv_usec / 1000);
-	return (ms);
+		usleep(400);
 }
 
 void	print_states(long long start, int index, char *status)
@@ -121,13 +65,13 @@ void	print_value(void)
 	while (i < singleton()->philo_nbr)
 	{
 		if (i + 1 == singleton()->philo_nbr)
-			printf("philo: [%u - %u]\n", singleton()->philo[i].n_philo, singleton()->philo[i].philo_status);
+			printf("philo: [%u]\n", singleton()->philo[i].n_philo);
 		else if (i < singleton()->philo_nbr)
-			printf("philo: [%u - %u]; ", singleton()->philo[i].n_philo, singleton()->philo[i].philo_status);
+			printf("philo: [%u]; ", singleton()->philo[i].n_philo);
 		++i;
 	}
-	printf("t2die [%u]\n", singleton()->time2die);
-	printf("t2eat [%u]\n", singleton()->time2eat);
-	printf("t2sleep [%u]\n", singleton()->time2sleep);
+	printf("t2die [%u]\n", singleton()->time2[e_DIE]);
+	printf("t2eat [%u]\n", singleton()->time2[e_EAT]);
+	printf("t2sleep [%u]\n", singleton()->time2[e_SLEEP]);
 	printf("must_e [%u]\n", singleton()->must_eat);
 }
