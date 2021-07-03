@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/03 19:07:35 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/03 19:47:20 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	print_value(void)
 	while (i < singleton()->philo_nbr)
 	{
 		if (i + 1 == singleton()->philo_nbr)
-			printf("philo: [%u]\n", singleton()->philo[i].n_philo);
+			printf("philo: [%u]\n", singleton()->philo[i].philo_index);
 		else if (i < singleton()->philo_nbr)
-			printf("philo: [%u]; ", singleton()->philo[i].n_philo);
+			printf("philo: [%u]; ", singleton()->philo[i].philo_index);
 		++i;
 	}
 	printf("t2die [%u]\n", singleton()->time2[e_DIE]);

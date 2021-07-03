@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/03 19:07:53 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/03 19:34:26 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ static void	take_fork(int index, long long start)
 	if (index % 2 == 0)
 	{
 		pthread_mutex_lock(&singleton()->fork[right]);
-		print_states(start, singleton()->philo[index].n_philo, FORK);
+		print_states(start, singleton()->philo[index].philo_index, FORK);
 		pthread_mutex_lock(&singleton()->fork[left]);
-		print_states(start, singleton()->philo[index].n_philo, FORK);
+		print_states(start, singleton()->philo[index].philo_index, FORK);
 	}
 	else
 	{
 		pthread_mutex_lock(&singleton()->fork[left]);
-		print_states(start, singleton()->philo[index].n_philo, FORK);
+		print_states(start, singleton()->philo[index].philo_index, FORK);
 		pthread_mutex_lock(&singleton()->fork[right]);
-		print_states(start, singleton()->philo[index].n_philo, FORK);
+		print_states(start, singleton()->philo[index].philo_index, FORK);
 	}
 }
 
@@ -52,13 +52,13 @@ static void	drop_fork(int index)
 
 static void	eating(int index, long long start)
 {
-	print_states(start, singleton()->philo[index].n_philo, EAT);
+	print_states(start, singleton()->philo[index].philo_index, EAT);
 	do_sleep(singleton()->time2[e_EAT]);
 }
 
 static void	sleeping(int index, long long start)
 {
-	print_states(start, singleton()->philo[index].n_philo, SLEEP);
+	print_states(start, singleton()->philo[index].philo_index, SLEEP);
 	do_sleep(singleton()->time2[e_SLEEP]);
 }
 
@@ -78,7 +78,7 @@ void	*philo(void *args)
 		eating(i, start);
 		drop_fork(i);
 		sleeping(i, start);
-		print_states(start, singleton()->philo[i].n_philo, THINK);
+		print_states(start, singleton()->philo[i].philo_index, THINK);
 	}
 	return (NULL);
 }

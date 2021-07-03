@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/03 19:06:20 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/03 19:47:09 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_value(int ac, char **av)
 		return ;
 	while (i <= singleton()->philo_nbr)
 	{
-		singleton()->philo[i].n_philo = i + 1;
+		singleton()->philo[i].philo_index = i + 1;
 		++i;
 	}
 	singleton()->fork = ft_calloc(sizeof(pthread_mutex_t), singleton()->philo_nbr);
@@ -45,7 +45,7 @@ void	init_value(void)
 		i = 0;
 		while (singleton()->philo && i < singleton()->philo_nbr)
 		{
-			singleton()->philo[i].n_philo = i + 1;
+			singleton()->philo[i].philo_index = i + 1;
 			++i;
 		}
 	}

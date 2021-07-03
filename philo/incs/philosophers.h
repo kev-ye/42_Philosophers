@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/03 19:05:36 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/03 19:52:46 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,62 +50,64 @@
 # define FORK_IS_DROP 1
 # define FORK_IS_TAKE 0
 
+/* ARGS */
+# define ARGS_NBR 4
+
 /* AGRS INDEX */
-enum    e_args_index
+enum	e_args_index
 {
-    e_NP = 1,
-    e_T2D = 2,
-    e_T2E = 3,
-    e_T2S = 4,
-    e_ME = 5
+	e_NP = 1,
+	e_T2D = 2,
+	e_T2E = 3,
+	e_T2S = 4,
+	e_ME = 5
 };
 
 /* TIME2 */
-enum    e_philo_status
+enum	e_philo_status
 {
-    e_DIE,
-    e_EAT,
-    e_SLEEP,
-    e_EATEN,
-    e_TAB_NBR
+	e_DIE,
+	e_EAT,
+	e_SLEEP,
+	e_EATEN
 };
 
 /* STRUCT */
 typedef struct s_philosophers
 {
-    pthread_t       philo;
-    unsigned int    n_philo;
-    unsigned int    nbr_eat; // fiveth opt
-}   t_philosophers;
+	pthread_t		philo;
+	unsigned int	philo_index;
+	unsigned int	nbr_eat; //
+}	t_philosophers;
 
 typedef struct s_philo
 {
-    unsigned int    philo_nbr;
-    unsigned int    time2[e_TAB_NBR];
-    unsigned int    must_eat;
-    t_philosophers  *philo;
-    pthread_mutex_t *fork;
-    pthread_mutex_t mutex_common;
-}   t_philo;
+	unsigned int	philo_nbr;
+	unsigned int	time2[ARGS_NBR];
+	unsigned int	must_eat;
+	t_philosophers	*philo;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	mutex_common;
+}	t_philo;
 
 /* PHILOSOPHERS */
-void	    *philo(void *args);
+void		*philo(void *args);
 
 /* MINI LIB */
-int		    ft_isdigit(int c);
-int		    ft_strdigit(const char *s);
-int		    ft_atoi(const char *str);
-void	    *ft_calloc(size_t count, size_t size);
+int			ft_isdigit(int c);
+int			ft_strdigit(const char *s);
+int			ft_atoi(const char *str);
+void		*ft_calloc(size_t count, size_t size);
 
 /* UTILS */
-int		    __ret__(char *msg, int ret, int to_free);
-t_philo	    *singleton(void);
-void	    init_value(void);
-void	    get_value(int ac, char **av);
-void	    do_sleep(long long ms);
+int			__ret__(char *msg, int ret, int to_free);
+t_philo		*singleton(void);
+void		init_value(void);
+void		get_value(int ac, char **av);
+void		do_sleep(long long ms);
 long long	get_time(void);
-void	    print_states(long long start, int index, char *status);
+void		print_states(long long start, int index, char *status);
 
 //to delete after
-void	    print_value(void);
+void		print_value(void);
 #endif
