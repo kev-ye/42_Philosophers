@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/03 19:52:46 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/04 17:10:26 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ enum	e_philo_status
 typedef struct s_philosophers
 {
 	pthread_t		philo;
-	unsigned int	philo_index;
-	unsigned int	nbr_eat; //
+	unsigned int	philo_i;
+	unsigned int	nbr_eat;
+	long long		last_meal;
 }	t_philosophers;
 
 typedef struct s_philo
@@ -85,6 +86,9 @@ typedef struct s_philo
 	unsigned int	philo_nbr;
 	unsigned int	time2[ARGS_NBR];
 	unsigned int	must_eat;
+	unsigned int	alive;
+	unsigned int	die;
+	long long		start;
 	t_philosophers	*philo;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	mutex_common;
@@ -92,6 +96,12 @@ typedef struct s_philo
 
 /* PHILOSOPHERS */
 void		*philo(void *args);
+
+/* MONITOR */
+void		monitor(void);
+int			still_alive(void);
+void		died(void);
+void		eat_counter(int index);
 
 /* MINI LIB */
 int			ft_isdigit(int c);
@@ -102,12 +112,8 @@ void		*ft_calloc(size_t count, size_t size);
 /* UTILS */
 int			__ret__(char *msg, int ret, int to_free);
 t_philo		*singleton(void);
-void		init_value(void);
-void		get_value(int ac, char **av);
+void		init_value(int ac, char **av);
 void		do_sleep(long long ms);
 long long	get_time(void);
 void		print_states(long long start, int index, char *status);
-
-//to delete after
-void		print_value(void);
 #endif

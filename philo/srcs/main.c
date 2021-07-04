@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/03 19:48:33 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/04 17:07:54 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	do_pthread(void)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < singleton()->philo_nbr)
@@ -23,21 +23,23 @@ static void	do_pthread(void)
 	i = 0;
 	while (i < singleton()->philo_nbr)
 	{
-		pthread_create(&singleton()->philo[i].philo, NULL, philo, (void *)(intptr_t)i);
+		pthread_create(&singleton()->philo[i].philo,
+			NULL, philo, (void *)(intptr_t)i);
 		++i;
 	}
+	monitor();
 	i = 0;
 	while (i < singleton()->philo_nbr)
 		pthread_join(singleton()->philo[i++].philo, NULL);
 	i = 0;
 	while (i < singleton()->philo_nbr)
 		pthread_mutex_destroy(&singleton()->fork[i++]);
-	pthread_mutex_init(&singleton()->mutex_common, NULL);
+	pthread_mutex_destroy(&singleton()->mutex_common);
 }
 
-static int args_check(char **av)
+static int	args_check(char **av)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (av[i])
@@ -50,14 +52,13 @@ static int args_check(char **av)
 	return (SUCCESS);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
 		return (__ret__(ERROR_MSG, FAILURE, NOTHING));
 	if (FAILURE == args_check(av))
 		return (__ret__(ERROR_MSG, FAILURE, NOTHING));
-	get_value(ac, av);
-	init_value();
+	init_value(ac, av);
 	do_pthread();
 	return (__ret__(NULL, SUCCESS, TO_FREE));
 }
