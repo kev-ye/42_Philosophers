@@ -6,14 +6,14 @@
 #    By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/28 14:19:08 by kaye              #+#    #+#              #
-#    Updated: 2021/07/06 15:39:33 by kaye             ###   ########.fr        #
+#    Updated: 2021/07/06 20:18:13 by kaye             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION
 
 CC		= clang
-CFLAGS 	= -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS 	= -Wall -Wextra -Werror -fsanitize=thread
 IFLAGS 	= -I./incs
 LFLAGS	= -lpthread
 
@@ -26,13 +26,17 @@ DIRS			:= $(OBJ_DIR)
 
 # FILES
 
-NAME			:= philo
+NAME			:= philo_bonus
 SRC				:= main.c \
 				   philosophers.c \
 				   monitor.c \
 				   init.c \
+				   exit.c \
 				   utils.c \
-				   mini_lib.c
+				   signal.c \
+				   signal2.c \
+				   mini_lib.c \
+				   mini_lib2.c
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # COLORS
