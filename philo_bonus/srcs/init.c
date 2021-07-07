@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 13:13:57 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:35:14 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ static void	init_fork(void)
 		singleton()->fork[i].sem_name = ft_itoa((int)i);
 		if (!singleton()->fork[i].sem_name)
 			__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
-		singleton()->fork[i++].fork = sem_open(singleton()->fork[i].sem_name,
+		sem_unlink(singleton()->fork[i].sem_name); // delete after
+		singleton()->fork[i].fork = sem_open(singleton()->fork[i].sem_name,
 			O_CREAT | O_RDWR,
 			0666, 1);
 		++i;
 	}
+	sem_unlink("common"); // delete after
 	singleton()->sem_common = sem_open("common", O_CREAT | O_RDWR, 0666, 1);
 }
 
@@ -54,10 +56,7 @@ void	init_value(int ac, char **av)
 {
 	singleton()->philo_nbr = ft_atoi(av[e_NP]);
 	init_philo();
-	singleton()->fork = ft_calloc(sizeof(t_fork),
-		singleton()->philo_nbr);
-	if (!singleton()->fork)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, NOTHING);
+	init_fork();
 	singleton()->time2[e_DIE] = ft_atoi(av[e_T2D]);
 	singleton()->time2[e_EAT] = ft_atoi(av[e_T2E]);
 	singleton()->time2[e_SLEEP] = ft_atoi(av[e_T2S]);

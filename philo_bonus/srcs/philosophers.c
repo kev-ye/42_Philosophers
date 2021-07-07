@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/06 20:27:42 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:30:52 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	*philo_in_fork(void *args)
 {
 	const unsigned int	i = (int)args;
 
-	singleton()->start = get_time();
 	while (still_alive() == 0)
 	{
 		take_fork(i, singleton()->start);
@@ -78,6 +77,7 @@ void	*philo_in_fork(void *args)
 		drop_fork(i);
 		sleeping(i, singleton()->start);
 		print_states(singleton()->start, singleton()->philo[i].philo_i, THINK);
+		singleton()->die = singleton()->philo_nbr;
 	}
 	return (NULL);
 }

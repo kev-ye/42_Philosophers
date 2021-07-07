@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/06 20:27:11 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:43:22 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define CLR "\033[2J\033[H"
 
 /* MESSAGE */
-# define ERROR_MSG "usage: \033[1;31m./philo [nbr_of_philo : >=2] [time_to_die]\n\
+# define ERROR_MSG "usage: \033[1;31m./philo [nbr_of_philo] [time_to_die]\n\
                [time_to_eat] [time_to_sleep]\n\
                \033[1;35m[[nbr_of_time_each_philo_must_eat]]\033[0m"
 # define E_MALLOC "Malloc error"
@@ -119,7 +119,7 @@ void		eat_counter(int index);
 /* MINI LIB */
 int			ft_isdigit(int c);
 int			ft_strdigit(const char *s);
-int			ft_atoi(const char *str);
+long		ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_itoa(int n);
 
@@ -133,6 +133,7 @@ int			_wtermsig(int status);
 /* UTILS */
 // int			__exit__(char *msg, int ret, int to_free);
 int			__exit__(char *msg, int ret, int to_free, int to_close);
+void		__free__(void *ptr);
 t_philo		*singleton(void);
 void		init_value(int ac, char **av);
 void		do_sleep(long long ms);

@@ -6,16 +6,16 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:21:19 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/06 19:17:49 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:30:08 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	signe;
-	int	res;
+	int		signe;
+	long	res;
 
 	signe = 1;
 	res = 0;

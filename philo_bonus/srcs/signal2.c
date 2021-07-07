@@ -6,11 +6,11 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:07:05 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/06 20:07:20 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:36:12 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo_bonus.h"
 
 int	_wifsignaled(int status)
 {

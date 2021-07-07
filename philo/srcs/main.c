@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 13:45:11 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:37:13 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,14 @@ static int	args_check(char **av)
 	i = 1;
 	while (av[i])
 	{
-		if (!ft_strdigit(av[i++]))
+		if (!ft_strdigit(av[i]))
 			return (FAILURE);
+		if (av[i][0] == '0' && av[i][1] == '\0')
+			return (FAILURE);
+		if (ft_atoi(av[i]) > INT32_MAX || ft_atoi(av[i]) < INT32_MIN)
+			return (FAILURE);
+		++i;
 	}
-	if (ft_atoi(av[1]) < 2)
-		return (FAILURE);
 	return (SUCCESS);
 }
 

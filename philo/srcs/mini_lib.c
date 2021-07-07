@@ -6,16 +6,16 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:21:19 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/04 17:08:39 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:00:57 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	signe;
-	int	res;
+	int		signe;
+	long	res;
 
 	signe = 1;
 	res = 0;

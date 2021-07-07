@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:14:40 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/06 20:20:53 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:30:23 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    __mutex_unlock__(void)
 		if (singleton()->fork[i].sem_name)
 		{
         	sem_unlink(singleton()->fork[i].sem_name);
-        	_free__(singleton()->fork[i].sem_name);
+        	__free__(singleton()->fork[i].sem_name);
 		}
         ++i;
     }
@@ -52,8 +52,6 @@ int	__exit__(char *msg, int ret, int to_free, int to_close)
                 __mutex_unlock__();
 			if (singleton()->philo)
 				__free__(singleton()->philo);
-			if (singleton()->philo)
-				__free__(singleton()->fork);
 		}
 		__free__(singleton());
 	}

@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/06 20:03:43 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:34:16 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	eat_counter(int index)
 
 		sem_wait(singleton()->sem_common);
 		++singleton()->die;
-
 		sem_post(singleton()->sem_common);
 	}
 }
@@ -53,7 +52,7 @@ void	monitor(void)
 		{
 			if (singleton()->philo[index].last_meal != 0
 				&& get_time() - singleton()->philo[index].last_meal
-				>= singleton()->time2[e_DIE])
+				> singleton()->time2[e_DIE])
 			{
 				print_states(singleton()->philo[index].last_meal,
 					singleton()->philo[index].philo_i, DIE);
