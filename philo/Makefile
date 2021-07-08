@@ -6,14 +6,14 @@
 #    By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/28 14:19:08 by kaye              #+#    #+#              #
-#    Updated: 2021/07/06 15:39:33 by kaye             ###   ########.fr        #
+#    Updated: 2021/07/08 18:27:44 by kaye             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION
 
 CC		= clang
-CFLAGS 	= -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS 	= -Wall -Wextra -Werror -fsanitize=thread
 IFLAGS 	= -I./incs
 LFLAGS	= -lpthread
 
@@ -54,7 +54,7 @@ B_CYAN 			= \033[1;36m
 $(NAME): $(OBJ)
 	@printf "$(CL_LINE)"
 	@echo "[1 / 1] - $(B_MAGENTA)$@$(NONE)"
-	@$(CC) $(CFLAG) $(IFLAGS) $(OBJ) -o $@ $(LFLAGS)
+	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJ) -o $@ $(LFLAGS)
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
 all: $(NAME)
@@ -76,4 +76,4 @@ $(BUILD):
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs object : $(B_CYAN)$< $(NONE)...\r"
-	@$(CC) $(CFLAG) $(IFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@

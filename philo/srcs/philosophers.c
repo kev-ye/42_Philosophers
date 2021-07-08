@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 14:37:13 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/08 18:35:32 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ static void	take_fork(int index, long long start)
 
 	if (index % 2 == 0)
 	{
-		if (singleton()->philo_nbr != 1)
-		{
-			pthread_mutex_lock(&singleton()->fork[right]);
-			print_states(start, singleton()->philo[index].philo_i, FORK);
-		}
+		pthread_mutex_lock(&singleton()->fork[right]);
+		print_states(start, singleton()->philo[index].philo_i, FORK);
 		pthread_mutex_lock(&singleton()->fork[left]);
 		print_states(start, singleton()->philo[index].philo_i, FORK);
 	}
@@ -58,31 +55,39 @@ static void	eating(int index, long long start)
 	if (singleton()->philo_nbr != 1)
 		print_states(start, singleton()->philo[index].philo_i, EAT);
 	singleton()->philo[index].last_meal = get_time();
-	do_sleep(singleton()->time2[e_EAT]);
+	do_sleep(singleton()->time2[e_EAT], index);
 }
 
 static void	sleeping(int index, long long start)
 {
 	if (singleton()->philo_nbr != 1)
 		print_states(start, singleton()->philo[index].philo_i, SLEEP);
-	do_sleep(singleton()->time2[e_SLEEP]);
+	do_sleep(singleton()->time2[e_SLEEP],index);
 }
 
 void	*philo(void *args)
 {
 	const unsigned int	i = (int)args;
 
-	while (still_alive() == 0)
+	while (monitor(i) && !must2eat())
 	{
-		take_fork(i, singleton()->start);
-		eating(i, singleton()->start);
-		if (singleton()->must_eat != 0
-			&& singleton()->philo[i].nbr_eat != singleton()->must_eat)
-			eat_counter(i);
-		drop_fork(i);
-		sleeping(i, singleton()->start);
-		if (singleton()->philo_nbr != 1)
-			print_states(singleton()->start, singleton()->philo[i].philo_i, THINK);
+		if (singleton()->philo_nbr == 1)
+		{
+			print_states(singleton()->start, singleton()->philo[i].philo_i, FORK);
+			do_sleep(singleton()->time2[e_DIE], i);
+		}
+		else
+		{
+			take_fork(i, singleton()->start);
+			eating(i, singleton()->start);
+			if (singleton()->must_eat != 0
+				&& singleton()->philo[i].nbr_eat != singleton()->must_eat)
+				eat_counter(i);
+			drop_fork(i);
+			sleeping(i, singleton()->start);
+			if (singleton()->philo_nbr != 1)
+				print_states(singleton()->start, singleton()->philo[i].philo_i, THINK);
+		}
 	}
 	return (NULL);
 }
