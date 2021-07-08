@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 14:38:02 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/08 14:13:16 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	do_sleep(long long ms)
 	const long long	start = get_time();
 
 	while (get_time() - start < ms && still_alive() == 0)
-		usleep(499);
+		usleep(400);
 }
 
 void	print_states(long long start, int index, char *status)
