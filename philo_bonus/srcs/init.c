@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 14:35:14 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 19:13:46 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,9 @@ static void	init_philo(void)
 
 static void	init_fork(void)
 {
-	int i;
-
-	i = 0;
-	singleton()->fork = ft_calloc(sizeof(t_fork),
-		singleton()->philo_nbr);
-	if (!singleton()->fork)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, NOTHING);
-	while (i < singleton()->philo_nbr)
-	{
-		singleton()->fork[i].sem_name = ft_itoa((int)i);
-		if (!singleton()->fork[i].sem_name)
-			__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
-		sem_unlink(singleton()->fork[i].sem_name); // delete after
-		singleton()->fork[i].fork = sem_open(singleton()->fork[i].sem_name,
-			O_CREAT | O_RDWR,
-			0666, 1);
-		++i;
-	}
-	sem_unlink("common"); // delete after
+	sem_unlink("fork");
+	singleton()->fork = sem_open("fork", O_CREAT | O_RDWR, 0666, singleton()->philo_nbr);
+	sem_unlink("common");
 	singleton()->sem_common = sem_open("common", O_CREAT | O_RDWR, 0666, 1);
 }
 
@@ -69,7 +53,11 @@ long long	get_time(void)
 	struct timeval	t;
 	long long		ms;
 
-	gettimeofday(&t, NULL);
+	if (gettimeofday(&t, NULL) == -1)
+	{
+		printf("GET TIME ERROE\n");
+		return (-1);
+	}
 	ms = (t.tv_sec * 1000) + (t.tv_usec / 1000);
 	return (ms);
 }

@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 14:43:22 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 19:19:19 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,21 @@ typedef struct s_philosophers
 {
 	pthread_t		philo;
 	pid_t			pid;
-	unsigned int	philo_i;
-	unsigned int	nbr_eat;
+	int	philo_i;
+	int	nbr_eat;
 	long long		last_meal;
 }	t_philosophers;
 
-typedef struct s_fork
-{
-	char	*sem_name;
-	sem_t	*fork;
-}	t_fork;
-
 typedef struct s_philo
 {
-	unsigned int	philo_nbr;
+	int	philo_nbr;
+	int	must_eat;
+	int	alive;
+	int	die;
 	unsigned int	time2[ARGS_NBR];
-	unsigned int	must_eat;
-	unsigned int	alive;
-	unsigned int	die;
-	int				status;
 	long long		start;
 	t_philosophers	*philo;
-	t_fork			*fork;
+	sem_t			fork;
 	sem_t			*sem_common;
 }	t_philo;
 
@@ -113,15 +106,12 @@ void		*philo(void *args);
 /* MONITOR */
 void		monitor(void);
 int			still_alive(void);
-void		died(void);
-void		eat_counter(int index);
 
 /* MINI LIB */
 int			ft_isdigit(int c);
 int			ft_strdigit(const char *s);
 long		ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
-char		*ft_itoa(int n);
 
 /* SIGNAL */
 int			_wstatus(int status);

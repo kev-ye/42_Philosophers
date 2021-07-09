@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 15:34:16 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 19:18:12 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,13 @@ int	still_alive(void)
 {
 	sem_wait(singleton()->sem_common);
 	singleton()->alive = singleton()->die;
-	sem_post(singleton()->sem_common);
 	if (singleton()->alive >= singleton()->philo_nbr)
-		return (1);
-	return (0);
-}
-
-void	died(void)
-{
-	sem_wait(singleton()->sem_common);
-	singleton()->die = singleton()->philo_nbr;
-	sem_post(singleton()->sem_common);
-}
-
-void	eat_counter(int index)
-{
-	++singleton()->philo[index].nbr_eat;
-	if (singleton()->philo[index].nbr_eat == singleton()->must_eat)
 	{
-
-		sem_wait(singleton()->sem_common);
-		++singleton()->die;
 		sem_post(singleton()->sem_common);
+		return (1);
 	}
+	sem_post(singleton()->sem_common);
+	return (0);
 }
 
 void	monitor(void)
@@ -47,8 +31,8 @@ void	monitor(void)
 
 	while (still_alive() == 0)
 	{
-		index = -1;
-		while (++index < singleton()->philo_nbr)
+		index = 0;
+		while (index < singleton()->philo_nbr)
 		{
 			if (singleton()->philo[index].last_meal != 0
 				&& get_time() - singleton()->philo[index].last_meal
@@ -56,9 +40,12 @@ void	monitor(void)
 			{
 				print_states(singleton()->philo[index].last_meal,
 					singleton()->philo[index].philo_i, DIE);
-				died();
+				sem_wait(singleton()->sem_common);
+				singleton()->die = singleton()->philo_nbr;
+				sem_post(singleton()->sem_common);
 				break ;
 			}
+			++index;
 		}
 	}
 }

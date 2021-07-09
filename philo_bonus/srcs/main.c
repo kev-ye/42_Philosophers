@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 15:29:02 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 19:14:51 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	main(int ac, char **av)
 		return (__exit__(ERROR_MSG, FAILURE, NOTHING, NOTHING));
 	init_value(ac, av);
 	singleton()->start = get_time();
+	if (singleton()->start == -1)
+		__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	do_pthread();
 	__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	return (0);

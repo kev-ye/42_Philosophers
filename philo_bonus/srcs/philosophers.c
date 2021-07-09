@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 15:30:52 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 19:19:47 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,16 @@
 
 void	take_fork(int index, long long start)
 {
-	const int	left = index;
-	const int	right = (index + 1) % singleton()->philo_nbr;
-
-	if (index % 2 == 0)
-	{
-		sem_wait(singleton()->fork[right].fork);
-		print_states(start, singleton()->philo[index].philo_i, FORK);
-		sem_wait(singleton()->fork[left].fork);
-		print_states(start, singleton()->philo[index].philo_i, FORK);
-	}
-	else
-	{
-		sem_wait(singleton()->fork[left].fork);
-		print_states(start, singleton()->philo[index].philo_i, FORK);
-		sem_wait(singleton()->fork[right].fork);
-		print_states(start, singleton()->philo[index].philo_i, FORK);
-	}
+	sem_wait(singleton()->fork);
+	print_states(start, singleton()->philo[index].philo_i, FORK);
+	sem_wait(singleton()->fork);
+	print_states(start, singleton()->philo[index].philo_i, FORK);
 }
 
 void	drop_fork(int index)
 {
-	const int	left = index;
-	const int	right = (index + 1) % singleton()->philo_nbr;
-
-	if (index % 2 == 0)
-	{
-		sem_post(singleton()->fork[left].fork);
-		sem_post(singleton()->fork[right].fork);
-	}
-	else
-	{
-		sem_post(singleton()->fork[right].fork);
-		sem_post(singleton()->fork[left].fork);
-	}
+	sem_post(singleton()->fork);
+	sem_post(singleton()->fork);
 }
 
 void	eating(int index, long long start)
@@ -55,6 +31,17 @@ void	eating(int index, long long start)
 	print_states(start, singleton()->philo[index].philo_i, EAT);
 	singleton()->philo[index].last_meal = get_time();
 	do_sleep(singleton()->time2[e_EAT]);
+	if (singleton()->must_eat != 0
+		&& singleton()->philo[index].nbr_eat != singleton()->must_eat)
+	{
+		++singleton()->philo[index].nbr_eat;
+		if (singleton()->philo[index].nbr_eat == singleton()->must_eat)
+		{
+			sem_wait(singleton()->sem_common);
+			++singleton()->die;
+			sem_post(singleton()->sem_common);
+		}
+	}
 }
 
 void	sleeping(int index, long long start)
@@ -71,9 +58,6 @@ void	*philo_in_fork(void *args)
 	{
 		take_fork(i, singleton()->start);
 		eating(i, singleton()->start);
-		if (singleton()->must_eat != 0
-			&& singleton()->philo[i].nbr_eat != singleton()->must_eat)
-			eat_counter(i);
 		drop_fork(i);
 		sleeping(i, singleton()->start);
 		print_states(singleton()->start, singleton()->philo[i].philo_i, THINK);
@@ -94,7 +78,5 @@ void	*philo(void *args)
 		philo_in_fork(args);
 		__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	}
-	else
-		waitpid(singleton()->philo[i].pid, &singleton()->status, 0);
 	return (NULL);
 }
