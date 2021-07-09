@@ -6,11 +6,13 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 14:38:02 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 19:06:40 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+#define __MICRO_SEC__ 400
 
 int	__ret__(char *msg, int ret, int to_free)
 {
@@ -47,13 +49,15 @@ void	do_sleep(long long ms)
 {
 	const long long	start = get_time();
 
-	while (get_time() - start < ms && still_alive() == 0)
-		usleep(499);
+	while (get_time() - start < ms && still_alive())
+		usleep(__MICRO_SEC__);
 }
 
 void	print_states(long long start, int index, char *status)
 {
-	if (still_alive() != 0)
+	const long long	current_time = get_time();
+
+	if (!still_alive())
 		return ;
-	printf("[%lld] [%u] [%s]\n", get_time() - start, index, status);
+	printf("[%lld] [%u] [%s]\n", current_time - start, index, status);
 }

@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 15:31:55 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 18:52:18 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ERROR_MSG "usage: \033[1;31m./philo [nbr_of_philo] [time_to_die]\n\
                [time_to_eat] [time_to_sleep]\n\
                \033[1;35m[[nbr_of_time_each_philo_must_eat]]\033[0m"
+# define TIME_ERROR "Get time of day error\n"
 # define EAT "is eating"
 # define FORK "has taken a fork"
 # define SLEEP "is sleeping"
@@ -101,7 +102,6 @@ void		*philo(void *args);
 void		monitor(void);
 int			still_alive(void);
 void		died(void);
-void		eat_counter(int index);
 
 /* MINI LIB */
 int			ft_isdigit(int c);

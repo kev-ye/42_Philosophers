@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 15:29:46 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 18:52:55 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ long long	get_time(void)
 	struct timeval	t;
 	long long		ms;
 
-	gettimeofday(&t, NULL);
+	if (gettimeofday(&t, NULL) == -1)
+	{
+		printf(TIME_ERROR);
+		return (-1);
+	}
 	ms = (t.tv_sec * 1000) + (t.tv_usec / 1000);
 	return (ms);
 }

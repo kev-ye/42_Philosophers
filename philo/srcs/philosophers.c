@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 15:32:40 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 19:05:54 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,17 @@ static void	eating(int index, long long start)
 		print_states(start, singleton()->philo[index].philo_i, EAT);
 	singleton()->philo[index].last_meal = get_time();
 	do_sleep(singleton()->time2[e_EAT]);
+	if (singleton()->must_eat != 0
+		&& singleton()->philo[index].nbr_eat != singleton()->must_eat)
+	{
+		++singleton()->philo[index].nbr_eat;
+		if (singleton()->philo[index].nbr_eat == singleton()->must_eat)
+		{
+			pthread_mutex_lock(&singleton()->mutex_common);
+			++singleton()->die;
+			pthread_mutex_unlock(&singleton()->mutex_common);
+		}
+	}
 }
 
 static void	sleeping(int index, long long start)
@@ -72,13 +83,10 @@ void	*philo(void *args)
 {
 	const unsigned int	i = (int)args;
 
-	while (still_alive() == 0)
+	while (still_alive())
 	{
 		take_fork(i, singleton()->start);
 		eating(i, singleton()->start);
-		if (singleton()->must_eat != 0
-			&& singleton()->philo[i].nbr_eat != singleton()->must_eat)
-			eat_counter(i);
 		drop_fork(i);
 		sleeping(i, singleton()->start);
 		if (singleton()->philo_nbr != 1)
