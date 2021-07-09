@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/08 18:29:21 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:37:13 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	do_pthread(void)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < singleton()->philo_nbr)
@@ -27,7 +27,7 @@ static void	do_pthread(void)
 			NULL, philo, (void *)(intptr_t)i);
 		++i;
 	}
-	// monitor();
+	monitor();
 	i = 0;
 	while (i < singleton()->philo_nbr)
 		pthread_join(singleton()->philo[i++].philo, NULL);
@@ -61,7 +61,7 @@ int	main(int ac, char **av)
 		return (__ret__(ERROR_MSG, FAILURE, NOTHING));
 	if (FAILURE == args_check(av))
 		return (__ret__(ERROR_MSG, FAILURE, NOTHING));
-	init_value(av);
+	init_value(ac, av);
 	singleton()->start = get_time();
 	do_pthread();
 	return (__ret__(NULL, SUCCESS, TO_FREE));

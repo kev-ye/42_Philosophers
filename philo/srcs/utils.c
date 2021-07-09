@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/08 18:32:33 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/07 14:38:02 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,17 @@ t_philo	*singleton(void)
 	return (philo);
 }
 
-void	do_sleep(long long ms, int index)
+void	do_sleep(long long ms)
 {
 	const long long	start = get_time();
 
-	while (get_time() - start < ms && monitor(index))
-		usleep(400);
+	while (get_time() - start < ms && still_alive() == 0)
+		usleep(499);
 }
 
 void	print_states(long long start, int index, char *status)
 {
-	// if (still_alive() != 0)
-	// 	return ;
-	if (!monitor(index))
+	if (still_alive() != 0)
 		return ;
 	printf("[%lld] [%u] [%s]\n", get_time() - start, index, status);
 }
