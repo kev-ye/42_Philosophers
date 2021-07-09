@@ -6,13 +6,13 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/04 17:07:16 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 15:29:46 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	init_value(int ac, char **av)
+void	init_value(char **av)
 {
 	int	i;
 

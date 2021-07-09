@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 14:43:32 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 15:31:55 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,18 @@ enum	e_philo_status
 typedef struct s_philosophers
 {
 	pthread_t		philo;
-	unsigned int	philo_i;
-	unsigned int	nbr_eat;
+	int				philo_i;
+	int				nbr_eat;
 	long long		last_meal;
 }	t_philosophers;
 
 typedef struct s_philo
 {
-	unsigned int	philo_nbr;
+	int				philo_nbr;
+	int				must_eat;
+	int				alive;
+	int				die;
 	unsigned int	time2[ARGS_NBR];
-	unsigned int	must_eat;
-	unsigned int	alive;
-	unsigned int	die;
 	long long		start;
 	t_philosophers	*philo;
 	pthread_mutex_t	*fork;
@@ -112,7 +112,7 @@ void		*ft_calloc(size_t count, size_t size);
 /* UTILS */
 int			__ret__(char *msg, int ret, int to_free);
 t_philo		*singleton(void);
-void		init_value(int ac, char **av);
+void		init_value(char **av);
 void		do_sleep(long long ms);
 long long	get_time(void);
 void		print_states(long long start, int index, char *status);

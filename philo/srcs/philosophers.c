@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/07 14:37:13 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/09 15:32:40 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ void	*philo(void *args)
 		drop_fork(i);
 		sleeping(i, singleton()->start);
 		if (singleton()->philo_nbr != 1)
-			print_states(singleton()->start, singleton()->philo[i].philo_i, THINK);
+			print_states(
+				singleton()->start,
+				singleton()->philo[i].philo_i,
+				THINK);
 	}
 	return (NULL);
 }
