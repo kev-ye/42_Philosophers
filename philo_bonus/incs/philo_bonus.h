@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:19:19 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 14:12:20 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_philo
 	unsigned int	time2[ARGS_NBR];
 	long long		start;
 	t_philosophers	*philo;
-	sem_t			fork;
+	sem_t			*fork;
 	sem_t			*sem_common;
 }	t_philo;
 
@@ -113,19 +113,12 @@ int			ft_strdigit(const char *s);
 long		ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
 
-/* SIGNAL */
-int			_wstatus(int status);
-int			_wifexited(int status);
-int			_wexitstatus(int status);
-int			_wifsignaled(int status);
-int			_wtermsig(int status);
-
 /* UTILS */
 // int			__exit__(char *msg, int ret, int to_free);
 int			__exit__(char *msg, int ret, int to_free, int to_close);
 void		__free__(void *ptr);
 t_philo		*singleton(void);
-void		init_value(int ac, char **av);
+void		init_value(char **av);
 void		do_sleep(long long ms);
 long long	get_time(void);
 void		print_states(long long start, int index, char *status);

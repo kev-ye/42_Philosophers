@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:14:40 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:14:20 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 14:12:33 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void    __mutex_unlock__(void)
 
 int	__exit__(char *msg, int ret, int to_free, int to_close)
 {
-	int i;
-
 	if (msg)
 		printf("%s\n", msg);
 	if (TO_FREE == to_free)

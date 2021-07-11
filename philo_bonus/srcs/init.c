@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:13:46 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 14:12:15 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	init_fork(void)
 	singleton()->sem_common = sem_open("common", O_CREAT | O_RDWR, 0666, 1);
 }
 
-void	init_value(int ac, char **av)
+void	init_value(char **av)
 {
 	singleton()->philo_nbr = ft_atoi(av[e_NP]);
 	init_philo();

@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:05:54 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 14:07:49 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ static void	eating(int index, long long start)
 	if (singleton()->philo_nbr != 1)
 		print_states(start, singleton()->philo[index].philo_i, EAT);
 	singleton()->philo[index].last_meal = get_time();
-	do_sleep(singleton()->time2[e_EAT]);
+	if (singleton()->philo_nbr == 1)
+		do_sleep(singleton()->time2[e_DIE]);
+	else
+		do_sleep(singleton()->time2[e_EAT]);
 	if (singleton()->must_eat != 0
 		&& singleton()->philo[index].nbr_eat != singleton()->must_eat)
 	{

@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:19:47 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 14:12:04 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	take_fork(int index, long long start)
 	print_states(start, singleton()->philo[index].philo_i, FORK);
 }
 
-void	drop_fork(int index)
+void	drop_fork(void)
 {
 	sem_post(singleton()->fork);
 	sem_post(singleton()->fork);
@@ -58,7 +58,7 @@ void	*philo_in_fork(void *args)
 	{
 		take_fork(i, singleton()->start);
 		eating(i, singleton()->start);
-		drop_fork(i);
+		drop_fork();
 		sleeping(i, singleton()->start);
 		print_states(singleton()->start, singleton()->philo[i].philo_i, THINK);
 		singleton()->die = singleton()->philo_nbr;

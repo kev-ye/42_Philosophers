@@ -6,7 +6,7 @@
 #    By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/28 14:19:08 by kaye              #+#    #+#              #
-#    Updated: 2021/07/09 19:18:54 by kaye             ###   ########.fr        #
+#    Updated: 2021/07/11 14:12:49 by kaye             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,6 @@ SRC				:= main.c \
 				   init.c \
 				   exit.c \
 				   utils.c \
-				   signal.c \
-				   signal2.c \
 				   mini_lib.c
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
