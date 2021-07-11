@@ -6,27 +6,27 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 14:12:25 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 18:41:41 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	do_pthread(void)
+static void	do_fork(void)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < singleton()->philo_nbr)
 	{
-		pthread_create(&singleton()->philo[i].philo,
-			NULL, philo, (void *)(intptr_t)i);
+		singleton()->philo[i].pid = fork();
+		if (singleton()->philo[i].pid < 0)
+			__exit__(E_FORK, FAILURE, TO_FREE, TO_CLOSE);
+		else if (singleton()->philo[i].pid == 0)
+			philo((void *)(intptr_t)i);
 		++i;
 	}
-	// monitor();
-	i = 0;
-	while (i < singleton()->philo_nbr)
-		pthread_join(singleton()->philo[i++].philo, NULL);
+	do_sleep(1000);
 }
 
 static int	args_check(char **av)
@@ -47,6 +47,19 @@ static int	args_check(char **av)
 	return (SUCCESS);
 }
 
+void	kill_philo(void)
+{
+	int i;
+
+	i = 0;
+	while (i < singleton()->philo_nbr)
+	{
+		// printf("killing id : [%d]\n", singleton()->philo[i].philo_i);
+		kill(singleton()->philo[i].pid, SIGQUIT);
+		++i;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
@@ -57,7 +70,9 @@ int	main(int ac, char **av)
 	singleton()->start = get_time();
 	if (singleton()->start == -1)
 		__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
-	do_pthread();
+	do_fork();
+	sem_wait(singleton()->kill_philo);
+	kill_philo();
 	__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	return (0);
 }

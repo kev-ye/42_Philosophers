@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/06 20:14:49 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 18:39:47 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	do_sleep(long long ms)
 
 void	print_states(long long start, int index, char *status)
 {
-	if (still_alive() != 0)
+	if (!still_alive())
 		return ;
+	sem_wait(singleton()->sem_common);
 	printf("[%lld] [%u] [%s]\n", get_time() - start, index, status);
+	sem_post(singleton()->sem_common);
 }

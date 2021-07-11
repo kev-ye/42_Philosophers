@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 14:12:20 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 17:53:39 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <semaphore.h>
+# include <signal.h>
 # include <pthread.h> 
 
 /* ASCII CODE */
@@ -38,6 +39,7 @@
                [time_to_eat] [time_to_sleep]\n\
                \033[1;35m[[nbr_of_time_each_philo_must_eat]]\033[0m"
 # define E_MALLOC "Malloc error"
+# define E_FORK "Fork error"
 # define EAT "is eating"
 # define FORK "has taken a fork"
 # define SLEEP "is sleeping"
@@ -97,6 +99,7 @@ typedef struct s_philo
 	long long		start;
 	t_philosophers	*philo;
 	sem_t			*fork;
+	sem_t			*kill_philo;
 	sem_t			*sem_common;
 }	t_philo;
 
@@ -114,7 +117,6 @@ long		ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
 
 /* UTILS */
-// int			__exit__(char *msg, int ret, int to_free);
 int			__exit__(char *msg, int ret, int to_free, int to_close);
 void		__free__(void *ptr);
 t_philo		*singleton(void);
