@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 18:37:20 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 20:11:25 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*monitor2(void *arg)
 {
 	const int i = (int)arg;
 
-	while (still_alive())
+	while (1)
 	{
 		if (singleton()->philo[i].last_meal != 0
 			&& get_time() - singleton()->philo[i].last_meal
@@ -85,7 +85,6 @@ void	*philo_in_fork(void *args)
 		sleeping(i, singleton()->start);
 		print_states(singleton()->start, singleton()->philo[i].philo_i, THINK);
 	}
-	sem_post(singleton()->kill_philo);
 	return (NULL);
 }
 

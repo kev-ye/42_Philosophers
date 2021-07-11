@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 18:41:41 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/11 20:07:38 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ void	kill_philo(void)
 	int i;
 
 	i = 0;
+	// sem_wait(singleton()->sem_common);
 	while (i < singleton()->philo_nbr)
 	{
-		// printf("killing id : [%d]\n", singleton()->philo[i].philo_i);
+		printf("killing id : [%d]\n", singleton()->philo[i].philo_i);
 		kill(singleton()->philo[i].pid, SIGQUIT);
 		++i;
 	}
+	// sem_post(singleton()->sem_common);
 }
 
 int	main(int ac, char **av)
