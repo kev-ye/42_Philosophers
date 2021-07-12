@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 17:15:03 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 19:59:56 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,9 @@
 # define TO_FREE 1
 # define NOTHING 0
 
-/* FORK STATUS */
-# define FORK_IS_DROP 1
-# define FORK_IS_TAKE 0
-
 /* ARGS */
 # define ARGS_NBR 4
 
-/* AGRS INDEX */
 enum	e_args_index
 {
 	e_NP = 1,

@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 18:46:26 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 20:17:53 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@
 # define TO_CLOSE 1
 # define NOTHING 0
 
-/* FORK STATUS */
-# define FORK_IS_DROP 1
-# define FORK_IS_TAKE 0
+/* SEMAPHORES */
+# define S_FORK "sem_fork" 
+# define S_KILL "sem_kill"
+# define S_DIE "sem_die"
+# define S_PRINT "sem_print"
+# define S_PMEC "sem_philo_must_eat_counter"
 
 /* ARGS */
 # define ARGS_NBR 4
 
-/* AGRS INDEX */
 enum	e_args_index
 {
 	e_NP = 1,
@@ -87,28 +89,27 @@ enum	e_philo_status
 /* STRUCT */
 typedef struct s_philosophers
 {
-	pthread_t		philo;
-	pid_t			pid;
-	int	philo_i;
-	int	nbr_eat;
-	long long		last_meal;
+	pthread_t	philo;
+	pid_t		pid;
+	int			philo_i;
+	int			nbr_eat;
+	long long	last_meal;
 }	t_philosophers;
 
 typedef struct s_philo
 {
-	int	philo_nbr;
-	int	must_eat;
-	int	alive;
-	int	die;
+	int				philo_nbr;
+	int				must_eat;
+	int				alive;
+	int				die;
 	unsigned int	time2[ARGS_NBR];
 	long long		start;
 	t_philosophers	*philo;
 	sem_t			*sem_fork;
 	sem_t			*sem_kill;
-	sem_t			*sem_common;
 	sem_t			*sem_die;
 	sem_t			*sem_print;
-	sem_t			*philo_must_eat_counter;
+	sem_t			*sem_philo_must_eat_counter;
 }	t_philo;
 
 /* PHILOSOPHERS */
@@ -116,6 +117,8 @@ void		*philo(void *args);
 
 /* MONITOR */
 int			still_alive(void);
+void		*monitoring(void *arg);
+void		*monitoring_eat(void *args);
 
 /* MINI LIB */
 int			ft_isdigit(int c);
@@ -126,6 +129,7 @@ void		*ft_calloc(size_t count, size_t size);
 /* UTILS */
 int			__exit__(char *msg, int ret, int to_free, int to_close);
 void		__free__(void *ptr);
+sem_t		*__sem_open__(const char *to_create, int flag, int priv, int lock);
 t_philo		*singleton(void);
 void		init_value(char **av);
 void		do_sleep(long long ms);

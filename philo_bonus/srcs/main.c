@@ -6,34 +6,19 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 18:58:34 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 20:27:08 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	*monitoring(void *args)
-{
-	(void)args;
-	int i;
-
-	i = 0;
-	while (i < singleton()->philo_nbr)
-	{
-		sem_wait(singleton()->philo_must_eat_counter);
-		++i;
-	}
-	sem_post(singleton()->sem_kill);
-	return (NULL);
-}
-
 static void	do_fork(void)
 {
 	pthread_t	monitor;
-	int 		i;
+	int			i;
 
 	i = 0;
-	pthread_create(&monitor, NULL, monitoring, NULL);
+	pthread_create(&monitor, NULL, monitoring_eat, NULL);
 	while (i < singleton()->philo_nbr)
 	{
 		singleton()->philo[i].pid = fork();
@@ -65,12 +50,12 @@ static int	args_check(char **av)
 
 void	kill_philo(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < singleton()->philo_nbr)
 	{
-		// printf("killing id : [%d]\n", singleton()->philo[i].philo_i);
+		sem_post(singleton()->sem_philo_must_eat_counter);
 		kill(singleton()->philo[i].pid, SIGQUIT);
 		++i;
 	}

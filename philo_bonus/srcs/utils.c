@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 17:15:24 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 20:21:15 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ t_philo	*singleton(void)
 			__exit__(E_MALLOC, FAILURE, NOTHING, NOTHING);
 	}
 	return (philo);
+}
+
+sem_t	*__sem_open__(const char *to_create, int flag, int priv, int lock)
+{
+	sem_t	*new_sem;
+
+	sem_unlink(to_create);
+	new_sem = sem_open(to_create, flag, priv, lock);
+	if (new_sem == SEM_FAILED)
+		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
+	return (new_sem);
 }
 
 void	do_sleep(long long ms)

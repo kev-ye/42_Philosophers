@@ -6,15 +6,18 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 18:55:51 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 20:19:19 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+const int	g_flag = O_CREAT | O_RDWR;
+const int	g_priv = 0666;
+
 static void	init_philo(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	singleton()->philo = ft_calloc(sizeof(t_philosophers),
@@ -30,31 +33,17 @@ static void	init_philo(void)
 
 static void	init_fork(void)
 {
-	// fork
-	sem_unlink("sem_fork");
-	singleton()->sem_fork = sem_open("sem_fork", O_CREAT | O_RDWR, 0666, singleton()->philo_nbr);
-	if (singleton()->sem_fork == SEM_FAILED)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
-	// kill
-	sem_unlink("sem_kill");
-	singleton()->sem_kill = sem_open("sem_kill", O_CREAT | O_RDWR, 0666, 0);
-	if (singleton()->sem_kill == SEM_FAILED)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
-	// print
-	sem_unlink("philo_must_eat_counter");
-	singleton()->philo_must_eat_counter = sem_open("philo_must_eat_counter", O_CREAT | O_RDWR, 0666, 0);
-	if (singleton()->philo_must_eat_counter == SEM_FAILED)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
-	// die
-	sem_unlink("sem_die");
-	singleton()->sem_die = sem_open("sem_die", O_CREAT | O_RDWR, 0666, 1);
-	if (singleton()->sem_die == SEM_FAILED)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
-	// print
-	sem_unlink("sem_print");
-	singleton()->sem_print = sem_open("sem_print", O_CREAT | O_RDWR, 0666, 1);
-	if (singleton()->sem_print == SEM_FAILED)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
+	singleton()->sem_fork = __sem_open__(S_FORK,
+		g_flag,
+		g_priv,
+		singleton()->philo_nbr);
+	singleton()->sem_kill = __sem_open__(S_KILL, g_flag, g_priv, 0);
+	singleton()->sem_philo_must_eat_counter = __sem_open__(S_PMEC,
+		g_flag,
+		g_priv,
+		0);
+	singleton()->sem_die = __sem_open__(S_DIE, g_flag, g_priv, 1);
+	singleton()->sem_print = __sem_open__(S_PRINT, g_flag, g_priv, 1);
 }
 
 void	init_value(char **av)

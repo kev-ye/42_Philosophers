@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:14:40 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 14:51:47 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 20:18:38 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@ void	__free__(void *ptr)
 	ptr = NULL;
 }
 
-void    __sem_unlock__(void)
+void	__sem_unlock__(void)
 {
 	sem_close(singleton()->sem_fork);
-	sem_unlink("sem_fork");
-    sem_close(singleton()->sem_common);
-    sem_unlink("sem_common");
+	sem_unlink(S_FORK);
 	sem_close(singleton()->sem_kill);
-    sem_unlink("sem_kill");
+	sem_unlink(S_KILL);
 	sem_close(singleton()->sem_die);
-    sem_unlink("sem_die");
+	sem_unlink(S_DIE);
+	sem_close(singleton()->sem_print);
+	sem_unlink(S_PRINT);
+	sem_close(singleton()->sem_philo_must_eat_counter);
+	sem_unlink(S_PMEC);
 }
 
 int	__exit__(char *msg, int ret, int to_free, int to_close)
@@ -38,8 +40,8 @@ int	__exit__(char *msg, int ret, int to_free, int to_close)
 	{
 		if (singleton())
 		{
-            if (TO_CLOSE == to_close)
-                __sem_unlock__();
+			if (TO_CLOSE == to_close)
+				__sem_unlock__();
 			if (singleton()->philo)
 				__free__(singleton()->philo);
 		}
