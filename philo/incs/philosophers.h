@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 14:58:58 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 17:15:03 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@
                [time_to_eat] [time_to_sleep]\n\
                \033[1;35m[[nbr_of_time_each_philo_must_eat]]\033[0m"
 # define TIME_ERROR "Get time of day error\n"
-# define EAT "is eating"
-# define FORK "has taken a fork"
-# define SLEEP "is sleeping"
-# define THINK "is thinking"
-# define DIE "died"
 
 /* RETURN */
 # define FAILURE 1
@@ -65,6 +60,16 @@ enum	e_args_index
 	e_T2E = 3,
 	e_T2S = 4,
 	e_ME = 5
+};
+
+/* PRINT STATES */
+enum	e_eat_status
+{
+	e_PRINT_EAT,
+	e_PRINT_FORK,
+	e_PRINT_SLEEP,
+	e_PRINT_THINK,
+	e_PRINT_DIE
 };
 
 /* TIME2 */
@@ -117,5 +122,5 @@ t_philo		*singleton(void);
 void		init_value(char **av);
 void		do_sleep(long long ms);
 long long	get_time(void);
-void		print_states(long long start, int index, char *status);
+void		print_states(long long start, int index, int s_index);
 #endif

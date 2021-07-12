@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:14:40 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 17:54:12 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 14:51:47 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ void	__free__(void *ptr)
 
 void    __sem_unlock__(void)
 {
-	sem_close(singleton()->fork);
-	sem_unlink("fork");
+	sem_close(singleton()->sem_fork);
+	sem_unlink("sem_fork");
     sem_close(singleton()->sem_common);
-    sem_unlink("common");
-	sem_close(singleton()->sem_common);
-    sem_unlink("kill_philo");
+    sem_unlink("sem_common");
+	sem_close(singleton()->sem_kill);
+    sem_unlink("sem_kill");
+	sem_close(singleton()->sem_die);
+    sem_unlink("sem_die");
 }
 
 int	__exit__(char *msg, int ret, int to_free, int to_close)

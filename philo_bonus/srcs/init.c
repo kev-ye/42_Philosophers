@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 18:07:06 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 18:55:51 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,29 @@ static void	init_philo(void)
 static void	init_fork(void)
 {
 	// fork
-	sem_unlink("fork");
-	singleton()->fork = sem_open("fork", O_CREAT | O_RDWR, 0666, singleton()->philo_nbr);
-	if (singleton()->fork == SEM_FAILED)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
-	// common
-	sem_unlink("common");
-	singleton()->sem_common = sem_open("common", O_CREAT | O_RDWR, 0666, 1);
-	if (singleton()->sem_common == SEM_FAILED)
+	sem_unlink("sem_fork");
+	singleton()->sem_fork = sem_open("sem_fork", O_CREAT | O_RDWR, 0666, singleton()->philo_nbr);
+	if (singleton()->sem_fork == SEM_FAILED)
 		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
 	// kill
-	sem_unlink("kill_philo");
-	singleton()->kill_philo = sem_open("kill_philo", O_CREAT | O_RDWR, 0666, 0);
-	if (singleton()->kill_philo == SEM_FAILED)
+	sem_unlink("sem_kill");
+	singleton()->sem_kill = sem_open("sem_kill", O_CREAT | O_RDWR, 0666, 0);
+	if (singleton()->sem_kill == SEM_FAILED)
+		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
+	// print
+	sem_unlink("philo_must_eat_counter");
+	singleton()->philo_must_eat_counter = sem_open("philo_must_eat_counter", O_CREAT | O_RDWR, 0666, 0);
+	if (singleton()->philo_must_eat_counter == SEM_FAILED)
+		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
+	// die
+	sem_unlink("sem_die");
+	singleton()->sem_die = sem_open("sem_die", O_CREAT | O_RDWR, 0666, 1);
+	if (singleton()->sem_die == SEM_FAILED)
+		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
+	// print
+	sem_unlink("sem_print");
+	singleton()->sem_print = sem_open("sem_print", O_CREAT | O_RDWR, 0666, 1);
+	if (singleton()->sem_print == SEM_FAILED)
 		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
 }
 

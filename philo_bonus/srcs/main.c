@@ -6,17 +6,34 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 20:07:38 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 18:58:34 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	do_fork(void)
+static void	*monitoring(void *args)
 {
+	(void)args;
 	int i;
 
 	i = 0;
+	while (i < singleton()->philo_nbr)
+	{
+		sem_wait(singleton()->philo_must_eat_counter);
+		++i;
+	}
+	sem_post(singleton()->sem_kill);
+	return (NULL);
+}
+
+static void	do_fork(void)
+{
+	pthread_t	monitor;
+	int 		i;
+
+	i = 0;
+	pthread_create(&monitor, NULL, monitoring, NULL);
 	while (i < singleton()->philo_nbr)
 	{
 		singleton()->philo[i].pid = fork();
@@ -26,7 +43,6 @@ static void	do_fork(void)
 			philo((void *)(intptr_t)i);
 		++i;
 	}
-	do_sleep(1000);
 }
 
 static int	args_check(char **av)
@@ -52,14 +68,12 @@ void	kill_philo(void)
 	int i;
 
 	i = 0;
-	// sem_wait(singleton()->sem_common);
 	while (i < singleton()->philo_nbr)
 	{
-		printf("killing id : [%d]\n", singleton()->philo[i].philo_i);
+		// printf("killing id : [%d]\n", singleton()->philo[i].philo_i);
 		kill(singleton()->philo[i].pid, SIGQUIT);
 		++i;
 	}
-	// sem_post(singleton()->sem_common);
 }
 
 int	main(int ac, char **av)
@@ -73,7 +87,7 @@ int	main(int ac, char **av)
 	if (singleton()->start == -1)
 		__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	do_fork();
-	sem_wait(singleton()->kill_philo);
+	sem_wait(singleton()->sem_kill);
 	kill_philo();
 	__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	return (0);

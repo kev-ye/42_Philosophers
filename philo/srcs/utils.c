@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:06:40 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 17:12:54 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ void	do_sleep(long long ms)
 		usleep(__MICRO_SEC__);
 }
 
-void	print_states(long long start, int index, char *status)
+void	print_states(long long start, int index, int s_index)
 {
 	const long long	current_time = get_time();
+	const char		*states[] = {"is eating", "has taken a fork",
+		"is sleeping", "is thinking", "died"};
 
 	if (!still_alive())
 		return ;
-	printf("[%lld] [%u] [%s]\n", current_time - start, index, status);
+	printf("[%lld] [%u] [%s]\n", current_time - start, index, states[s_index]);
 }

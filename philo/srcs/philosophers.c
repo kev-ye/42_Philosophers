@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/11 14:07:49 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 17:14:25 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@ static void	take_fork(int index, long long start)
 		if (singleton()->philo_nbr != 1)
 		{
 			pthread_mutex_lock(&singleton()->fork[right]);
-			print_states(start, singleton()->philo[index].philo_i, FORK);
+			print_states(start,
+				singleton()->philo[index].philo_i,
+				e_PRINT_FORK);
 		}
 		pthread_mutex_lock(&singleton()->fork[left]);
-		print_states(start, singleton()->philo[index].philo_i, FORK);
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
 	}
 	else
 	{
 		pthread_mutex_lock(&singleton()->fork[left]);
-		print_states(start, singleton()->philo[index].philo_i, FORK);
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
 		pthread_mutex_lock(&singleton()->fork[right]);
-		print_states(start, singleton()->philo[index].philo_i, FORK);
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
 	}
 }
 
@@ -56,7 +58,7 @@ static void	drop_fork(int index)
 static void	eating(int index, long long start)
 {
 	if (singleton()->philo_nbr != 1)
-		print_states(start, singleton()->philo[index].philo_i, EAT);
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_EAT);
 	singleton()->philo[index].last_meal = get_time();
 	if (singleton()->philo_nbr == 1)
 		do_sleep(singleton()->time2[e_DIE]);
@@ -78,7 +80,7 @@ static void	eating(int index, long long start)
 static void	sleeping(int index, long long start)
 {
 	if (singleton()->philo_nbr != 1)
-		print_states(start, singleton()->philo[index].philo_i, SLEEP);
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_SLEEP);
 	do_sleep(singleton()->time2[e_SLEEP]);
 }
 
@@ -96,7 +98,7 @@ void	*philo(void *args)
 			print_states(
 				singleton()->start,
 				singleton()->philo[i].philo_i,
-				THINK);
+				e_PRINT_THINK);
 	}
 	return (NULL);
 }

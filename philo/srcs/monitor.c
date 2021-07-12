@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:04:34 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/12 17:12:36 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	monitor(void)
 				> singleton()->time2[e_DIE])
 			{
 				print_states(singleton()->philo[index].last_meal,
-					singleton()->philo[index].philo_i, DIE);
+					singleton()->philo[index].philo_i, e_PRINT_DIE);
 				pthread_mutex_lock(&singleton()->mutex_common);
 				singleton()->die = singleton()->philo_nbr;
 				pthread_mutex_unlock(&singleton()->mutex_common);
