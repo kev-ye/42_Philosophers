@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 17:12:54 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/13 16:25:56 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,16 @@ int	__ret__(char *msg, int ret, int to_free)
 	{
 		if (singleton())
 		{
-			free(singleton()->philo);
-			singleton()->philo = NULL;
-			free(singleton()->fork);
-			singleton()->fork = NULL;
+			if (singleton()->philo)
+			{
+				free(singleton()->philo);
+				singleton()->philo = NULL;
+			}
+			if (singleton()->fork)
+			{
+				free(singleton()->fork);
+				singleton()->fork = NULL;
+			}
 		}
 		free(singleton());
 	}
@@ -45,11 +51,11 @@ t_philo	*singleton(void)
 	return (philo);
 }
 
-void	do_sleep(long long ms)
+void	do_sleep(long long ms, int index)
 {
 	const long long	start = get_time();
 
-	while (get_time() - start < ms && still_alive())
+	while (get_time() - start < ms && still_alive(index))
 		usleep(__MICRO_SEC__);
 }
 
@@ -59,7 +65,12 @@ void	print_states(long long start, int index, int s_index)
 	const char		*states[] = {"is eating", "has taken a fork",
 		"is sleeping", "is thinking", "died"};
 
-	if (!still_alive())
+	if (singleton()->die == singleton()->philo_nbr)
 		return ;
-	printf("[%lld] [%u] [%s]\n", current_time - start, index, states[s_index]);
+	if (enough_ate())
+		return ;
+	printf("[%lld] [%u] [%s]\n",
+		current_time - start,
+		singleton()->philo[index].philo_i,
+		states[s_index]);
 }

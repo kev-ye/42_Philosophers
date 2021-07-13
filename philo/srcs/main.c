@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/09 19:05:30 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/13 15:17:05 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	do_pthread(void)
 			return ;
 		++i;
 	}
-	monitor();
 	i = 0;
 	while (i < singleton()->philo_nbr)
 		pthread_join(singleton()->philo[i++].philo, NULL);

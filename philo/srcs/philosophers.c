@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 17:14:25 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/13 16:16:42 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,17 @@ static void	take_fork(int index, long long start)
 		if (singleton()->philo_nbr != 1)
 		{
 			pthread_mutex_lock(&singleton()->fork[right]);
-			print_states(start,
-				singleton()->philo[index].philo_i,
-				e_PRINT_FORK);
+			print_states(start, index, e_PRINT_FORK);
 		}
 		pthread_mutex_lock(&singleton()->fork[left]);
-		print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
+		print_states(start, index, e_PRINT_FORK);
 	}
 	else
 	{
 		pthread_mutex_lock(&singleton()->fork[left]);
-		print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
+		print_states(start, index, e_PRINT_FORK);
 		pthread_mutex_lock(&singleton()->fork[right]);
-		print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
+		print_states(start, index, e_PRINT_FORK);
 	}
 }
 
@@ -58,37 +56,27 @@ static void	drop_fork(int index)
 static void	eating(int index, long long start)
 {
 	if (singleton()->philo_nbr != 1)
-		print_states(start, singleton()->philo[index].philo_i, e_PRINT_EAT);
+		print_states(start, index, e_PRINT_EAT);
 	singleton()->philo[index].last_meal = get_time();
 	if (singleton()->philo_nbr == 1)
-		do_sleep(singleton()->time2[e_DIE]);
+		do_sleep(singleton()->time2[e_DIE], index);
 	else
-		do_sleep(singleton()->time2[e_EAT]);
-	if (singleton()->must_eat != 0
-		&& singleton()->philo[index].nbr_eat != singleton()->must_eat)
-	{
-		++singleton()->philo[index].nbr_eat;
-		if (singleton()->philo[index].nbr_eat == singleton()->must_eat)
-		{
-			pthread_mutex_lock(&singleton()->mutex_common);
-			++singleton()->die;
-			pthread_mutex_unlock(&singleton()->mutex_common);
-		}
-	}
+		do_sleep(singleton()->time2[e_EAT], index);
+	++singleton()->philo[index].nbr_eat;
 }
 
 static void	sleeping(int index, long long start)
 {
 	if (singleton()->philo_nbr != 1)
-		print_states(start, singleton()->philo[index].philo_i, e_PRINT_SLEEP);
-	do_sleep(singleton()->time2[e_SLEEP]);
+		print_states(start, index, e_PRINT_SLEEP);
+	do_sleep(singleton()->time2[e_SLEEP], index);
 }
 
 void	*philo(void *args)
 {
-	const unsigned int	i = (int)args;
+	const int	i = (int)args;
 
-	while (still_alive())
+	while (still_alive(i) && !enough_ate())
 	{
 		take_fork(i, singleton()->start);
 		eating(i, singleton()->start);
@@ -97,7 +85,7 @@ void	*philo(void *args)
 		if (singleton()->philo_nbr != 1)
 			print_states(
 				singleton()->start,
-				singleton()->philo[i].philo_i,
+				i,
 				e_PRINT_THINK);
 	}
 	return (NULL);
