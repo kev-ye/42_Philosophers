@@ -6,11 +6,13 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 10:31:31 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/13 10:57:23 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+#define __MICRO_SEC__ 400
 
 t_philo	*singleton(void)
 {
@@ -42,7 +44,7 @@ void	do_sleep(long long ms)
 
 	while (get_time() - start < ms
 		&& singleton()->die != singleton()->philo_nbr)
-		usleep(400);
+		usleep(__MICRO_SEC__);
 }
 
 void	print_states(long long start, int index, int s_index)
