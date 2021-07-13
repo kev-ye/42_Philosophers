@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 20:21:15 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/13 10:31:31 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	do_sleep(long long ms)
 {
 	const long long	start = get_time();
 
-	while (get_time() - start < ms)
+	while (get_time() - start < ms
+		&& singleton()->die != singleton()->philo_nbr)
 		usleep(400);
 }
 
@@ -52,6 +53,8 @@ void	print_states(long long start, int index, int s_index)
 
 	if (!still_alive())
 		return ;
+	if (s_index == e_PRINT_DIE)
+		sem_wait(singleton()->sem_die);
 	sem_wait(singleton()->sem_print);
 	printf("[%lld] [%u] [%s]\n", current_time - start, index, states[s_index]);
 	sem_post(singleton()->sem_print);

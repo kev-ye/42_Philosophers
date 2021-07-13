@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 20:22:04 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/13 10:38:41 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 static void	take_fork(int index, long long start)
 {
-	sem_wait(singleton()->sem_fork);
-	print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
+	if (singleton()->philo_nbr != 1)
+	{
+		sem_wait(singleton()->sem_fork);
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
+	}
 	sem_wait(singleton()->sem_fork);
 	print_states(start, singleton()->philo[index].philo_i, e_PRINT_FORK);
 }
@@ -28,9 +31,13 @@ static void	drop_fork(void)
 
 static void	eating(int index, long long start)
 {
-	print_states(start, singleton()->philo[index].philo_i, e_PRINT_EAT);
+	if (singleton()->philo_nbr != 1)
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_EAT);
 	singleton()->philo[index].last_meal = get_time();
-	do_sleep(singleton()->time2[e_EAT]);
+	if (singleton()->philo_nbr == 1)
+		do_sleep(singleton()->time2[e_DIE]);
+	else
+		do_sleep(singleton()->time2[e_EAT]);
 	if (singleton()->must_eat != 0
 		&& singleton()->philo[index].nbr_eat != singleton()->must_eat)
 	{
@@ -42,7 +49,8 @@ static void	eating(int index, long long start)
 
 static void	sleeping(int index, long long start)
 {
-	print_states(start, singleton()->philo[index].philo_i, e_PRINT_SLEEP);
+	if (singleton()->philo_nbr != 1)
+		print_states(start, singleton()->philo[index].philo_i, e_PRINT_SLEEP);
 	do_sleep(singleton()->time2[e_SLEEP]);
 }
 
@@ -62,5 +70,6 @@ void	*philo(void *args)
 			singleton()->philo[i].philo_i,
 			e_PRINT_THINK);
 	}
+	__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	return (NULL);
 }

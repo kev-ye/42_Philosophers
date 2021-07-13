@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 20:26:13 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/13 10:31:38 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	still_alive(void)
 	if (singleton()->alive >= singleton()->philo_nbr)
 	{
 		sem_post(singleton()->sem_kill);
-		sem_wait(singleton()->sem_die);
 		return (0);
 	}
 	return (1);
@@ -34,7 +33,6 @@ void	*monitoring(void *arg)
 			&& get_time() - singleton()->philo[i].last_meal
 			> singleton()->time2[e_DIE])
 		{
-			sem_wait(singleton()->sem_die);
 			print_states(singleton()->philo[i].last_meal,
 				singleton()->philo[i].philo_i, e_PRINT_DIE);
 			sem_wait(singleton()->sem_print);
