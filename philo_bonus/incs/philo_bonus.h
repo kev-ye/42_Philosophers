@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 20:17:53 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 13:28:03 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <semaphore.h>
 # include <signal.h>
 # include <pthread.h> 
+# if defined __linux__
+#  include <stdint.h>
+# endif
 
 /* ASCII CODE */
 # define B_BLACK "\033[1;30m"
