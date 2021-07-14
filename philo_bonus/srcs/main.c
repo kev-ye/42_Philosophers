@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 10:37:45 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 19:50:04 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static void	do_fork(void)
 	{
 		singleton()->philo[i].pid = fork();
 		if (singleton()->philo[i].pid < 0)
-			__exit__(E_FORK, FAILURE, TO_FREE, TO_CLOSE);
+		{
+			printf("Fork error: %s: %d\n", __FILE__, __LINE__);
+			__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
+		}
 		else if (singleton()->philo[i].pid == 0)
 			philo((void *)(intptr_t)i);
 		++i;
@@ -70,7 +73,7 @@ int	main(int ac, char **av)
 	init_value(av);
 	singleton()->start = get_time();
 	if (singleton()->start == -1)
-		__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
+		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 	do_fork();
 	sem_wait(singleton()->sem_kill);
 	kill_philo();

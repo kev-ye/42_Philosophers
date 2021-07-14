@@ -6,35 +6,52 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 15:17:05 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 20:02:44 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	do_pthread(void)
+static int	init_phread(void)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < singleton()->philo_nbr)
-		pthread_mutex_init(&singleton()->fork[i++], NULL);
-	pthread_mutex_init(&singleton()->mutex_common, NULL);
+	{
+		if (pthread_mutex_init(&singleton()->fork[i++], NULL) != 0)
+			return (FAILURE);
+	}
+	if (pthread_mutex_init(&singleton()->mutex_common, NULL) != 0)
+		return (FAILURE);
 	i = 0;
 	while (i < singleton()->philo_nbr)
 	{
 		if (pthread_create(&singleton()->philo[i].philo,
 				NULL, philo, (void *)(intptr_t)i) != 0)
-			return ;
+			return (FAILURE);
 		++i;
 	}
+	return (SUCCESS);
+}
+
+static int	do_pthread(void)
+{
+	int	i;
+
+	if (init_phread() != SUCCESS)
+		return (FAILURE);
 	i = 0;
 	while (i < singleton()->philo_nbr)
-		pthread_join(singleton()->philo[i++].philo, NULL);
+	{
+		if (pthread_join(singleton()->philo[i++].philo, NULL) != 0)
+			return (FAILURE);
+	}
 	i = 0;
 	while (i < singleton()->philo_nbr)
 		pthread_mutex_destroy(&singleton()->fork[i++]);
 	pthread_mutex_destroy(&singleton()->mutex_common);
+	return (SUCCESS);
 }
 
 static int	args_check(char **av)
@@ -61,10 +78,15 @@ int	main(int ac, char **av)
 		return (__ret__(ERROR_MSG, FAILURE, NOTHING));
 	if (FAILURE == args_check(av))
 		return (__ret__(ERROR_MSG, FAILURE, NOTHING));
-	init_value(av);
+	if (init_value(av) == FAILURE)
+	{
+		printf("Malloc error: %s: %d\n", __FILE__, __LINE__);
+		return (__ret__(NULL, FAILURE, TO_FREE));
+	}
 	singleton()->start = get_time();
 	if (singleton()->start == -1)
 		return (__ret__(NULL, FAILURE, TO_FREE));
-	do_pthread();
+	if (do_pthread() == FAILURE)
+		return (__ret__(NULL, FAILURE, TO_FREE));	
 	return (__ret__(NULL, SUCCESS, TO_FREE));
 }

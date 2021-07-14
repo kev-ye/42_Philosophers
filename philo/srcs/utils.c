@@ -6,13 +6,19 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 16:25:56 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 19:46:16 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 #define __MICRO_SEC__ 400
+
+void	__free__(void **ptr)
+{
+	free(*ptr);
+	*ptr = NULL;
+}
 
 int	__ret__(char *msg, int ret, int to_free)
 {
@@ -23,15 +29,9 @@ int	__ret__(char *msg, int ret, int to_free)
 		if (singleton())
 		{
 			if (singleton()->philo)
-			{
-				free(singleton()->philo);
-				singleton()->philo = NULL;
-			}
+				__free__((void **)(&singleton()->philo));
 			if (singleton()->fork)
-			{
-				free(singleton()->fork);
-				singleton()->fork = NULL;
-			}
+				__free__((void **)(&singleton()->fork));
 		}
 		free(singleton());
 	}

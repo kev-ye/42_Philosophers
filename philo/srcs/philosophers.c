@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 16:16:42 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 19:42:09 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	*philo(void *args)
 				singleton()->start,
 				i,
 				e_PRINT_THINK);
+		do_sleep(singleton()->time2[e_EAT] - singleton()->time2[e_SLEEP], i);
 	}
 	return (NULL);
 }

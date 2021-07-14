@@ -6,16 +6,16 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:14:40 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/12 20:18:38 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 19:52:15 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	__free__(void *ptr)
+static void	__free__(void **ptr)
 {
-	free(ptr);
-	ptr = NULL;
+	free(*ptr);
+	*ptr = NULL;
 }
 
 void	__sem_unlock__(void)
@@ -43,9 +43,9 @@ int	__exit__(char *msg, int ret, int to_free, int to_close)
 			if (TO_CLOSE == to_close)
 				__sem_unlock__();
 			if (singleton()->philo)
-				__free__(singleton()->philo);
+				__free__((void **)(&singleton()->philo));
 		}
-		__free__(singleton());
+		free(singleton());
 	}
 	exit(ret);
 }

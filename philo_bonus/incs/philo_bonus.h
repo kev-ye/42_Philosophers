@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 13:28:03 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 19:52:26 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@
 # define ERROR_MSG "usage: \033[1;31m./philo [nbr_of_philo] [time_to_die]\n\
                [time_to_eat] [time_to_sleep]\n\
                \033[1;35m[[nbr_of_time_each_philo_must_eat]]\033[0m"
-# define E_MALLOC "Malloc error"
-# define E_FORK "Fork error"
 
 /* RETURN */
 # define FAILURE 1
@@ -131,7 +129,6 @@ void		*ft_calloc(size_t count, size_t size);
 
 /* UTILS */
 int			__exit__(char *msg, int ret, int to_free, int to_close);
-void		__free__(void *ptr);
 sem_t		*__sem_open__(const char *to_create, int flag, int priv, int lock);
 t_philo		*singleton(void);
 void		init_value(char **av);

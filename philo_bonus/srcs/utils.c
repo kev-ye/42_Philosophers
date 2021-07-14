@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 14:49:40 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 19:51:55 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ t_philo	*singleton(void)
 	{
 		philo = ft_calloc(sizeof(t_philo), 1);
 		if (!philo)
-			__exit__(E_MALLOC, FAILURE, NOTHING, NOTHING);
+		{
+			printf("Malloc error: %s: %d\n", __FILE__, __LINE__);
+			__exit__(NULL, FAILURE, NOTHING, NOTHING);
+		}
 	}
 	return (philo);
 }
@@ -34,7 +37,10 @@ sem_t	*__sem_open__(const char *to_create, int flag, int priv, int lock)
 	sem_unlink(to_create);
 	new_sem = sem_open(to_create, flag, priv, lock);
 	if (new_sem == SEM_FAILED)
-		__exit__(E_MALLOC, FAILURE, TO_FREE, TO_CLOSE);
+	{
+		printf("Malloc error: %s: %d\n", __FILE__, __LINE__);
+		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
+	}
 	return (new_sem);
 }
 
