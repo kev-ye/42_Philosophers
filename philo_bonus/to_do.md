@@ -7,3 +7,4 @@
 - [x] ./philo_bonus 4 500 200 2147483647    // die -> ~500 ms
 - [x] ./philo_bonus 4 2147483647 200 200    // loop infinite
 - [x] ./philo_bonus 4 200 210 200           // die -> <210 ms
+- [x] ./philo_bonus 4 310 200 100           // die
