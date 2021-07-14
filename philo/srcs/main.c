@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 20:02:44 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/14 20:21:27 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	init_phread(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < singleton()->philo_nbr)
@@ -87,6 +87,6 @@ int	main(int ac, char **av)
 	if (singleton()->start == -1)
 		return (__ret__(NULL, FAILURE, TO_FREE));
 	if (do_pthread() == FAILURE)
-		return (__ret__(NULL, FAILURE, TO_FREE));	
+		return (__ret__(NULL, FAILURE, TO_FREE));
 	return (__ret__(NULL, SUCCESS, TO_FREE));
 }
