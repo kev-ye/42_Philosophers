@@ -16,6 +16,8 @@ int		init_value(char **av)
 {
 	int	i;
 
+	if (!singleton())
+		return (FAILURE);
 	singleton()->philo_nbr = ft_atoi(av[e_NP]);
 	singleton()->philo = ft_calloc(sizeof(t_philosophers),
 		singleton()->philo_nbr);
