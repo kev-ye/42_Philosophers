@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 16:25:20 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 19:56:43 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	still_alive(int index)
 	{
 		pthread_mutex_lock(&singleton()->mutex_common);
 		print_states(singleton()->philo[index].last_meal,
-			index, e_PRINT_DIE);
+			index, e_PRINT_DIE, 1);
 		singleton()->die = singleton()->philo_nbr;
 		pthread_mutex_unlock(&singleton()->mutex_common);
 		return (0);

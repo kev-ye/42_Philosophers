@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 19:42:59 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 19:57:56 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,5 @@ t_philo		*singleton(void);
 int			init_value(char **av);
 void		do_sleep(long long ms, int index);
 long long	get_time(void);
-void		print_states(long long start, int index, int s_index);
+void		print_states(long long start, int index, int s_index, int is_die);
 #endif
