@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 17:43:01 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 19:13:38 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,12 @@ void	print_states(long long start, int index, int s_index)
 		return ;
 	if (enough_ate())
 		return ;
+	if (singleton()->philo_nbr != 1)
+		pthread_mutex_lock(&singleton()->mutex_common);
 	printf("[%lld] [%u] [%s]\n",
 		get_time() - start,
 		singleton()->philo[index].philo_i,
 		states[s_index]);
+	if (singleton()->philo_nbr != 1)
+		pthread_mutex_unlock(&singleton()->mutex_common);
 }
