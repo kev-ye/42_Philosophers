@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 19:46:16 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 17:43:01 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	do_sleep(long long ms, int index)
 
 void	print_states(long long start, int index, int s_index)
 {
-	const long long	current_time = get_time();
 	const char		*states[] = {"is eating", "has taken a fork",
 		"is sleeping", "is thinking", "died"};
 
@@ -70,7 +69,7 @@ void	print_states(long long start, int index, int s_index)
 	if (enough_ate())
 		return ;
 	printf("[%lld] [%u] [%s]\n",
-		current_time - start,
+		get_time() - start,
 		singleton()->philo[index].philo_i,
 		states[s_index]);
 }
