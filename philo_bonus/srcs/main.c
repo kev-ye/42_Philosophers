@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 16:25:26 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 20:33:36 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	do_fork(void)
 	int			i;
 
 	i = 0;
+	// pthread_create(&monitor, NULL, monitoring_eat, NULL);
 	while (i < singleton()->philo_nbr)
 	{
 		singleton()->philo[i].pid = fork();

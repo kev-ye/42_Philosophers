@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 14:52:55 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 20:32:23 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ typedef struct s_philo
 void		*philo(void *args);
 
 /* MONITOR */
-int			still_alive(void);
+// int			still_alive(void);
+int			still_alive(int index);
 void		*monitoring(void *arg);
 void		*monitoring_eat(void *args);
 
@@ -136,7 +137,8 @@ void		__sem_close__(void);
 void		kill_philo(void);
 t_philo		*singleton(void);
 void		init_value(char **av);
-void		do_sleep(long long ms);
+// void		do_sleep(long long ms);
+void		do_sleep(long long ms, int index);
 long long	get_time(void);
 void		print_states(long long start, int index, int s_index);
 #endif

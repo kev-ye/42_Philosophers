@@ -6,18 +6,36 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 17:42:10 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 20:24:34 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	still_alive(void)
+// int	still_alive(void)
+// {
+// 	singleton()->alive = singleton()->die;
+// 	if (singleton()->alive >= singleton()->philo_nbr)
+// 	{
+// 		sem_post(singleton()->sem_kill);
+// 		return (0);
+// 	}
+// 	return (1);
+// }
+
+int	still_alive(int index)
 {
 	singleton()->alive = singleton()->die;
 	if (singleton()->alive >= singleton()->philo_nbr)
+		return (0);
+	if (singleton()->philo[index].last_meal != 0
+		&& get_time() - singleton()->philo[index].last_meal
+		> singleton()->time2[e_DIE])
 	{
-		sem_post(singleton()->sem_kill);
+		print_states(singleton()->philo[index].last_meal,
+			index, e_PRINT_DIE);
+		sem_wait(singleton()->sem_print);
+		singleton()->die = singleton()->philo_nbr;
 		return (0);
 	}
 	return (1);
