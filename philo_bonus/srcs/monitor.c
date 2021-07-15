@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 10:31:38 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 16:09:26 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*monitoring_eat(void *args)
 	i = 0;
 	while (i < singleton()->philo_nbr)
 	{
-		sem_wait(singleton()->sem_philo_must_eat_counter);
+		sem_wait(singleton()->sem_counter);
 		++i;
 	}
 	sem_post(singleton()->sem_kill);

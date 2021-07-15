@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 19:52:26 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 14:52:55 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_philo
 	sem_t			*sem_kill;
 	sem_t			*sem_die;
 	sem_t			*sem_print;
-	sem_t			*sem_philo_must_eat_counter;
+	sem_t			*sem_counter;
 }	t_philo;
 
 /* PHILOSOPHERS */

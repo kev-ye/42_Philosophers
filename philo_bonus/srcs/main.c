@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:25:25 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 19:50:04 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 16:14:56 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,6 @@ static int	args_check(char **av)
 	return (SUCCESS);
 }
 
-void	kill_philo(void)
-{
-	int	i;
-
-	i = 0;
-	while (i < singleton()->philo_nbr)
-	{
-		sem_post(singleton()->sem_philo_must_eat_counter);
-		kill(singleton()->philo[i].pid, SIGQUIT);
-		++i;
-	}
-}
-
 int	main(int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
@@ -76,7 +63,6 @@ int	main(int ac, char **av)
 		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 	do_fork();
 	sem_wait(singleton()->sem_kill);
-	kill_philo();
 	__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	return (0);
 }

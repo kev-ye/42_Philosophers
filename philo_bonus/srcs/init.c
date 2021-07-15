@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 20:10:08 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 14:56:32 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,38 @@ static void	init_philo(void)
 	}
 }
 
-static void	init_fork(void)
+static void	init_sem(void)
 {
-	singleton()->sem_fork = __sem_open__(S_FORK,
-		g_flag,
-		g_priv,
-		singleton()->philo_nbr);
-	singleton()->sem_kill = __sem_open__(S_KILL, g_flag, g_priv, 0);
-	singleton()->sem_philo_must_eat_counter = __sem_open__(S_PMEC,
-		g_flag,
-		g_priv,
-		0);
-	singleton()->sem_die = __sem_open__(S_DIE, g_flag, g_priv, 1);
-	singleton()->sem_print = __sem_open__(S_PRINT, g_flag, g_priv, 1);
+	t_philo *philo;
+
+	philo = singleton();
+	if (!philo)
+	{
+		printf("Malloc error: %s: %d\n", __FILE__, __LINE__);
+		__exit__(NULL, FAILURE, TO_FREE, NOTHING);
+	}
+	philo->sem_fork = __sem_open__(S_FORK, g_flag, g_priv, philo->philo_nbr);
+	if (philo->sem_fork == SEM_FAILED)
+		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
+	philo->sem_kill = __sem_open__(S_KILL, g_flag, g_priv, 0);
+	if (philo->sem_kill == SEM_FAILED)
+		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
+	philo->sem_counter = __sem_open__(S_PMEC, g_flag, g_priv, 0);
+	if (philo->sem_counter == SEM_FAILED)
+		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
+	philo->sem_die = __sem_open__(S_DIE, g_flag, g_priv, 1);
+	if (philo->sem_die == SEM_FAILED)
+		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
+	philo->sem_print = __sem_open__(S_PRINT, g_flag, g_priv, 1);
+	if (philo->sem_print == SEM_FAILED)
+		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 }
 
 void	init_value(char **av)
 {
 	singleton()->philo_nbr = ft_atoi(av[e_NP]);
 	init_philo();
-	init_fork();
+	init_sem();
 	singleton()->time2[e_DIE] = ft_atoi(av[e_T2D]);
 	singleton()->time2[e_EAT] = ft_atoi(av[e_T2E]);
 	singleton()->time2[e_SLEEP] = ft_atoi(av[e_T2S]);

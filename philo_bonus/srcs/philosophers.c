@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/13 10:38:41 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 16:15:36 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,10 @@ static void	eating(int index, long long start)
 		do_sleep(singleton()->time2[e_DIE]);
 	else
 		do_sleep(singleton()->time2[e_EAT]);
+	++singleton()->philo[index].nbr_eat;
 	if (singleton()->must_eat != 0
-		&& singleton()->philo[index].nbr_eat != singleton()->must_eat)
-	{
-		++singleton()->philo[index].nbr_eat;
-		if (singleton()->philo[index].nbr_eat == singleton()->must_eat)
-			sem_post(singleton()->sem_philo_must_eat_counter);
-	}
+		&& singleton()->philo[index].nbr_eat == singleton()->must_eat)
+			sem_post(singleton()->sem_counter);
 }
 
 static void	sleeping(int index, long long start)
@@ -58,7 +55,7 @@ void	*philo(void *args)
 {
 	const unsigned int	i = (int)args;
 	pthread_t			monitor;
-
+	int 				j;
 	pthread_create(&monitor, NULL, monitoring, (void *)(intptr_t)i);
 	while (still_alive())
 	{
@@ -70,6 +67,9 @@ void	*philo(void *args)
 			singleton()->philo[i].philo_i,
 			e_PRINT_THINK);
 	}
-	__exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
+	j = -1;
+	while (++j < singleton()->philo_nbr)
+		sem_post(singleton()->sem_counter);
+	__exit__(NULL, SUCCESS, NOTHING, NOTHING);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:14:40 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/14 19:52:15 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/15 16:08:45 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,33 @@ static void	__free__(void **ptr)
 
 void	__sem_unlock__(void)
 {
-	sem_close(singleton()->sem_fork);
+	t_philo	*philo;
+
+	philo = singleton();
+	if (philo->sem_fork && philo->sem_fork != SEM_FAILED)
+		sem_close(philo->sem_fork);
+	if (philo->sem_kill && philo->sem_kill != SEM_FAILED)
+		sem_close(philo->sem_kill);
+	if (philo->sem_die && philo->sem_die != SEM_FAILED)
+		sem_close(philo->sem_die);
+	if (philo->sem_print && philo->sem_print != SEM_FAILED)
+		sem_close(philo->sem_print);
+	if (philo->sem_counter && philo->sem_counter != SEM_FAILED)
+		sem_close(philo->sem_counter);
 	sem_unlink(S_FORK);
-	sem_close(singleton()->sem_kill);
 	sem_unlink(S_KILL);
-	sem_close(singleton()->sem_die);
 	sem_unlink(S_DIE);
-	sem_close(singleton()->sem_print);
 	sem_unlink(S_PRINT);
-	sem_close(singleton()->sem_philo_must_eat_counter);
 	sem_unlink(S_PMEC);
+}
+
+void	kill_philo(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < singleton()->philo_nbr)
+		kill(singleton()->philo[i++].pid, SIGQUIT);
 }
 
 int	__exit__(char *msg, int ret, int to_free, int to_close)
@@ -42,6 +59,7 @@ int	__exit__(char *msg, int ret, int to_free, int to_close)
 		{
 			if (TO_CLOSE == to_close)
 				__sem_unlock__();
+			kill_philo();
 			if (singleton()->philo)
 				__free__((void **)(&singleton()->philo));
 		}
