@@ -34,7 +34,7 @@ static void	init_philo(void)
 	}
 }
 
-static void	init_sem(void)
+void	init_sem(void)
 {
 	t_philo *philo;
 
@@ -45,20 +45,11 @@ static void	init_sem(void)
 		__exit__(NULL, FAILURE, TO_FREE, NOTHING);
 	}
 	philo->sem_fork = __sem_open__(S_FORK, g_flag, g_priv, philo->philo_nbr);
-	if (philo->sem_fork == SEM_FAILED)
-		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 	philo->sem_kill = __sem_open__(S_KILL, g_flag, g_priv, 0);
-	if (philo->sem_kill == SEM_FAILED)
-		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 	philo->sem_counter = __sem_open__(S_PMEC, g_flag, g_priv, 0);
-	if (philo->sem_counter == SEM_FAILED)
-		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 	philo->sem_die = __sem_open__(S_DIE, g_flag, g_priv, 1);
-	if (philo->sem_die == SEM_FAILED)
-		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 	philo->sem_print = __sem_open__(S_PRINT, g_flag, g_priv, 1);
-	if (philo->sem_print == SEM_FAILED)
-		__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
+	philo->sem_test = __sem_open__("test", g_flag, g_priv, 0);
 }
 
 void	init_value(char **av)

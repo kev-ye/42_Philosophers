@@ -27,7 +27,9 @@ static void	do_fork(void)
 			__exit__(NULL, FAILURE, TO_FREE, TO_CLOSE);
 		}
 		else if (singleton()->philo[i].pid == 0)
+		{
 			philo((void *)(intptr_t)i);
+		}
 		++i;
 	}
 	pthread_create(&monitor, NULL, monitoring_eat, NULL);

@@ -51,12 +51,26 @@ static void	sleeping(int index, long long start)
 	do_sleep(singleton()->time2[e_SLEEP]);
 }
 
+void	*monitoring_close(void *args)
+{
+	(void)args;
+	sem_wait(singleton()->sem_test);
+	__sem_close__();
+	// exit(0);
+	return (NULL);
+}
+
 void	*philo(void *args)
 {
 	const unsigned int	i = (int)args;
 	pthread_t			monitor;
+	pthread_t			monitor2;
 	int 				j;
+
 	pthread_create(&monitor, NULL, monitoring, (void *)(intptr_t)i);
+	pthread_create(&monitor2, NULL, monitoring_close, (void *)(intptr_t)i);
+	pthread_detach(monitor);
+	pthread_detach(monitor2);
 	while (still_alive())
 	{
 		take_fork(i, singleton()->start);

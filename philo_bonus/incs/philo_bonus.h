@@ -111,6 +111,7 @@ typedef struct s_philo
 	sem_t			*sem_die;
 	sem_t			*sem_print;
 	sem_t			*sem_counter;
+	sem_t			*sem_test;
 }	t_philo;
 
 /* PHILOSOPHERS */
@@ -130,6 +131,9 @@ void		*ft_calloc(size_t count, size_t size);
 /* UTILS */
 int			__exit__(char *msg, int ret, int to_free, int to_close);
 sem_t		*__sem_open__(const char *to_create, int flag, int priv, int lock);
+void		__sem_unlink__(void);
+void		__sem_close__(void);
+void		kill_philo(void);
 t_philo		*singleton(void);
 void		init_value(char **av);
 void		do_sleep(long long ms);

@@ -18,7 +18,20 @@ static void	__free__(void **ptr)
 	*ptr = NULL;
 }
 
-void	__sem_unlock__(void)
+void	__sem_unlink__(void)
+{
+	t_philo	*philo;
+
+	philo = singleton();
+	sem_unlink(S_FORK);
+	sem_unlink(S_KILL);
+	sem_unlink(S_DIE);
+	sem_unlink(S_PRINT);
+	sem_unlink(S_PMEC);
+	sem_unlink("test");
+}
+
+void	__sem_close__(void)
 {
 	t_philo	*philo;
 
@@ -33,20 +46,25 @@ void	__sem_unlock__(void)
 		sem_close(philo->sem_print);
 	if (philo->sem_counter && philo->sem_counter != SEM_FAILED)
 		sem_close(philo->sem_counter);
-	sem_unlink(S_FORK);
-	sem_unlink(S_KILL);
-	sem_unlink(S_DIE);
-	sem_unlink(S_PRINT);
-	sem_unlink(S_PMEC);
+	if (philo->sem_test && philo->sem_test != SEM_FAILED)
+		sem_close(philo->sem_test);
 }
 
 void	kill_philo(void)
 {
 	int	i;
 
+	// i = 0;
+	// while (i < singleton()->philo_nbr)
+	// {
+	// 	sem_post(singleton()->sem_test);
+	// 	++i;
+	// }
 	i = 0;
 	while (i < singleton()->philo_nbr)
+	{
 		kill(singleton()->philo[i++].pid, SIGQUIT);
+	}
 }
 
 int	__exit__(char *msg, int ret, int to_free, int to_close)
@@ -58,7 +76,10 @@ int	__exit__(char *msg, int ret, int to_free, int to_close)
 		if (singleton())
 		{
 			if (TO_CLOSE == to_close)
-				__sem_unlock__();
+			{
+				__sem_close__();
+				__sem_unlink__();
+			}
 			kill_philo();
 			if (singleton()->philo)
 				__free__((void **)(&singleton()->philo));
