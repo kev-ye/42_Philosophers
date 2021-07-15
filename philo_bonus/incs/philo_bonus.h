@@ -111,7 +111,7 @@ typedef struct s_philo
 	sem_t			*sem_die;
 	sem_t			*sem_print;
 	sem_t			*sem_counter;
-	sem_t			*sem_test;
+	// sem_t			*sem_test;
 }	t_philo;
 
 /* PHILOSOPHERS */

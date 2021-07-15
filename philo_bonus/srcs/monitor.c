@@ -58,6 +58,7 @@ void	*monitoring(void *arg)
 			break ;
 		}
 	}
+	// __exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	return (NULL);
 }
 

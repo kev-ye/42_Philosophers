@@ -28,7 +28,7 @@ void	__sem_unlink__(void)
 	sem_unlink(S_DIE);
 	sem_unlink(S_PRINT);
 	sem_unlink(S_PMEC);
-	sem_unlink("test");
+	// sem_unlink("test");
 }
 
 void	__sem_close__(void)
@@ -46,8 +46,8 @@ void	__sem_close__(void)
 		sem_close(philo->sem_print);
 	if (philo->sem_counter && philo->sem_counter != SEM_FAILED)
 		sem_close(philo->sem_counter);
-	if (philo->sem_test && philo->sem_test != SEM_FAILED)
-		sem_close(philo->sem_test);
+	// if (philo->sem_test && philo->sem_test != SEM_FAILED)
+	// 	sem_close(philo->sem_test);
 }
 
 void	kill_philo(void)
@@ -71,15 +71,18 @@ int	__exit__(char *msg, int ret, int to_free, int to_close)
 {
 	if (msg)
 		printf("%s\n", msg);
+	if (TO_CLOSE == to_close)
+	{
+		if (singleton())
+		{
+			__sem_close__();
+			__sem_unlink__();
+		}
+	}
 	if (TO_FREE == to_free)
 	{
 		if (singleton())
 		{
-			if (TO_CLOSE == to_close)
-			{
-				__sem_close__();
-				__sem_unlink__();
-			}
 			kill_philo();
 			if (singleton()->philo)
 				__free__((void **)(&singleton()->philo));

@@ -49,7 +49,7 @@ void	init_sem(void)
 	philo->sem_counter = __sem_open__(S_PMEC, g_flag, g_priv, 0);
 	philo->sem_die = __sem_open__(S_DIE, g_flag, g_priv, 1);
 	philo->sem_print = __sem_open__(S_PRINT, g_flag, g_priv, 1);
-	philo->sem_test = __sem_open__("test", g_flag, g_priv, 0);
+	// philo->sem_test = __sem_open__("test", g_flag, g_priv, 0);
 }
 
 void	init_value(char **av)

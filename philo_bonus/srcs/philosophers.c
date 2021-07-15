@@ -51,13 +51,13 @@ static void	sleeping(int index, long long start)
 	do_sleep(singleton()->time2[e_SLEEP], index);
 }
 
-void	*monitoring_close(void *args)
-{
-	(void)args;
-	sem_wait(singleton()->sem_test);
-	__sem_close__();
-	return (NULL);
-}
+// void	*monitoring_close(void *args)
+// {
+// 	(void)args;
+// 	sem_wait(singleton()->sem_test);
+// 	__sem_close__();
+// 	return (NULL);
+// }
 
 void	*philo(void *args)
 {
@@ -83,6 +83,13 @@ void	*philo(void *args)
 	while (++j < singleton()->philo_nbr)
 		sem_post(singleton()->sem_counter);
 	sem_wait(singleton()->sem_print);
-	__exit__(NULL, SUCCESS, NOTHING, NOTHING);
+	if (singleton())
+	{
+		// kill_philo();
+		if (singleton()->philo)
+			free(singleton()->philo);
+	}
+	free(singleton());
+	__exit__(NULL, SUCCESS, NOTHING, TO_CLOSE);
 	return (NULL);
 }
