@@ -30,7 +30,7 @@ static void	do_fork(void)
 		else if (singleton()->philo[i].pid == 0)
 		{
 			philo((void *)(intptr_t)i);
-			__sem_close__();
+			// __sem_close__();
 		}
 		++i;
 	}

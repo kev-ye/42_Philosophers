@@ -83,13 +83,6 @@ void	*philo(void *args)
 	while (++j < singleton()->philo_nbr)
 		sem_post(singleton()->sem_counter);
 	sem_wait(singleton()->sem_print);
-	if (singleton())
-	{
-		// kill_philo();
-		if (singleton()->philo)
-			free(singleton()->philo);
-	}
-	free(singleton());
 	__exit__(NULL, SUCCESS, NOTHING, TO_CLOSE);
 	return (NULL);
 }

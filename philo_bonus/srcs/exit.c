@@ -63,7 +63,7 @@ void	kill_philo(void)
 	i = 0;
 	while (i < singleton()->philo_nbr)
 	{
-		kill(singleton()->philo[i++].pid, SIGQUIT);
+		kill(singleton()->philo[i++].pid, SIGKILL);
 	}
 }
 
@@ -87,6 +87,7 @@ int	__exit__(char *msg, int ret, int to_free, int to_close)
 			if (singleton()->philo)
 				__free__((void **)(&singleton()->philo));
 		}
+		memset(singleton(), 0, sizeof(t_philo));
 		free(singleton());
 	}
 	exit(ret);
