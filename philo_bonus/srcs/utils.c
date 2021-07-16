@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 19:19:31 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 20:32:15 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/16 18:11:20 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,6 @@ sem_t	*__sem_open__(const char *to_create, int flag, int priv, int lock)
 	return (new_sem);
 }
 
-// void	do_sleep(long long ms)
-// {
-// 	const long long	start = get_time();
-
-// 	while (get_time() - start < ms
-// 		&& singleton()->die != singleton()->philo_nbr)
-// 		usleep(__MICRO_SEC__);
-// }
-
 void	do_sleep(long long ms, int index)
 {
 	const long long	start = get_time();
@@ -60,7 +51,6 @@ void	do_sleep(long long ms, int index)
 	while (get_time() - start < ms && still_alive(index))
 		usleep(__MICRO_SEC__);
 }
-
 
 void	print_states(long long start, int index, int s_index)
 {
@@ -72,6 +62,9 @@ void	print_states(long long start, int index, int s_index)
 	if (s_index == e_PRINT_DIE)
 		sem_wait(singleton()->sem_die);
 	sem_wait(singleton()->sem_print);
-	printf("[%lld] [%u] [%s]\n", get_time() - start, singleton()->philo[index].philo_i, states[s_index]);
+	printf("[%lld] [%u] [%s]\n",
+		get_time() - start,
+		singleton()->philo[index].philo_i,
+		states[s_index]);
 	sem_post(singleton()->sem_print);
 }

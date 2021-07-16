@@ -6,22 +6,11 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:44:42 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 20:24:34 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/16 18:07:55 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-// int	still_alive(void)
-// {
-// 	singleton()->alive = singleton()->die;
-// 	if (singleton()->alive >= singleton()->philo_nbr)
-// 	{
-// 		sem_post(singleton()->sem_kill);
-// 		return (0);
-// 	}
-// 	return (1);
-// }
 
 int	still_alive(int index)
 {
@@ -58,7 +47,6 @@ void	*monitoring(void *arg)
 			break ;
 		}
 	}
-	// __exit__(NULL, SUCCESS, TO_FREE, TO_CLOSE);
 	return (NULL);
 }
 

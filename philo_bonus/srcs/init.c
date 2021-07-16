@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:49:55 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 14:56:32 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/16 18:10:02 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	init_philo(void)
 
 void	init_sem(void)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = singleton();
 	if (!philo)
@@ -49,7 +49,6 @@ void	init_sem(void)
 	philo->sem_counter = __sem_open__(S_PMEC, g_flag, g_priv, 0);
 	philo->sem_die = __sem_open__(S_DIE, g_flag, g_priv, 1);
 	philo->sem_print = __sem_open__(S_PRINT, g_flag, g_priv, 1);
-	// philo->sem_test = __sem_open__("test", g_flag, g_priv, 0);
 }
 
 void	init_value(char **av)

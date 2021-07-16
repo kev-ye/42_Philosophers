@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 16:48:15 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/15 20:32:50 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/16 18:11:11 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	eating(int index, long long start)
 	++singleton()->philo[index].nbr_eat;
 	if (singleton()->must_eat != 0
 		&& singleton()->philo[index].nbr_eat == singleton()->must_eat)
-			sem_post(singleton()->sem_counter);
+		sem_post(singleton()->sem_counter);
 }
 
 static void	sleeping(int index, long long start)
@@ -51,25 +51,11 @@ static void	sleeping(int index, long long start)
 	do_sleep(singleton()->time2[e_SLEEP], index);
 }
 
-// void	*monitoring_close(void *args)
-// {
-// 	(void)args;
-// 	sem_wait(singleton()->sem_test);
-// 	__sem_close__();
-// 	return (NULL);
-// }
-
 void	*philo(void *args)
 {
 	const unsigned int	i = (int)args;
-	// pthread_t			monitor;
-	// pthread_t			monitor2;
-	int 				j;
+	int					j;
 
-	// pthread_create(&monitor, NULL, monitoring, (void *)(intptr_t)i);
-	// pthread_create(&monitor2, NULL, monitoring_close, (void *)(intptr_t)i);
-	// pthread_detach(monitor);
-	// pthread_detach(monitor2);
 	while (still_alive(i))
 	{
 		take_fork(i, singleton()->start);
