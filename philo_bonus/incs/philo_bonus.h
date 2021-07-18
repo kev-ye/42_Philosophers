@@ -6,7 +6,7 @@
 /*   By: kaye <kaye@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:20:00 by kaye              #+#    #+#             */
-/*   Updated: 2021/07/16 18:09:42 by kaye             ###   ########.fr       */
+/*   Updated: 2021/07/18 13:25:48 by kaye             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void		*philo(void *args);
 
 /* MONITOR */
 int			still_alive(int index);
-void		*monitoring(void *arg);
 void		*monitoring_eat(void *args);
 
 /* MINI LIB */
