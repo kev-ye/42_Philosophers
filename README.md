@@ -6,4 +6,4 @@
 
 ## Presentation
 
-In this project, you will learn the basics of threading a process.
+The basics of threading a process.
